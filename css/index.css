@@ -1,0 +1,112 @@
+#top_ten_module_container{
+	width : 40%;
+	vertical-align:top;
+	
+	font-size:80%;
+}
+#top_ten_module{
+	height: 100%;
+	
+
+}
+#top_ten_module_header{
+	padding:10px;
+	
+}
+#top_ten_module_container tr {
+	height:35px;
+}
+#top_ten_module_container td {
+	font-size:80%;
+}
+#homepage_signup_module_container{
+width: 30%;
+
+}
+#homepage_signup_module{
+	
+	
+}
+#homepage_signup_module_header{
+	
+	 	width:100%;
+	 	text-align:center;
+	 	padding:10px 0px;
+			
+}
+#homepage_signup_module_header div{
+	
+	
+}
+
+#homepage_signup_module_body{
+
+	text-align:center;
+	padding:15px;
+	background:linear-gradient(180deg , #5dc21c, #006400);
+
+}
+#homepage_signup_module_body span{
+
+  
+}
+#homepage_signup_module_body span a{
+ text-decoration:none;
+ color: #FFFFFF;
+background:linear-gradient(180deg,#0072CE, #003087);
+ border-radius:50px;
+padding:5px;
+box-shadow: 2px 2px 3px grey;
+margin:0px auto;
+}
+#gamer_signup_popup_box{
+	
+}
+#gamer_signup_popup_box form{
+	margin:0px;
+	padding:0px;
+	border:0px;
+	width:inherit;
+}
+#gamer_signup_popup_box form fieldset{
+	margin:0px;
+	padding:0px;
+	width:inherit;
+	border:0px;
+}
+#gamer_signup_popup_box form fieldset legend{
+	
+	font-weight:900;
+}
+#gamer_signup_popup_box form input{
+	margin:0px;
+	padding:0px;
+	border:solid 1px #0072CE;
+	width:100%;
+	
+}
+#gamer_signup_popup_box form input::-webkit-input-placeholder { /* WebKit, Blink, Edge */
+    color:    #0072CE;
+}
+#gamer_signup_popup_box form input:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+   color:    #0072CE;
+   opacity:  1;
+}
+#gamer_signup_popup_box form input::-moz-placeholder { /* Mozilla Firefox 19+ */
+   color:    #0072CE#909;
+   opacity:  1;
+}
+#gamer_signup_popup_box form input:-ms-input-placeholder { /* Internet Explorer 10-11 */
+   color:    #0072CE;
+}
+#gamer_signup_popup_box form input:placeholder-shown { /* Standard (https://drafts.csswg.org/selectors-4/#placeholder) */
+  color:    #0072CE;
+}
+#gamer_signup_popup_box form input[type='submit']{
+	background:linear-gradient(180deg,#0072CE,#003087);
+	color:white;
+}
+#gamer_news_module_container{
+	
+
+}

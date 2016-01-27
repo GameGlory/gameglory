@@ -1,0 +1,470 @@
+html {
+	    padding : 0px;
+	    margin : 0px;
+		border:0px;
+		height:100%;
+	}
+	
+	body {
+		
+		background-color:#E6E6E0;
+	    color:black;
+	    margin:0px;
+		border: 0px;
+		height:100%;
+		font-family:Verdana;
+	   
+	}
+	.page_header {
+		color:white;
+		margin:0px;
+		border:0px;
+		height:10%;
+		z-index:50;
+		position:relative;
+		box-shadow: 0px 5px 5px black;
+		font-family : BentonSans, Arial, Helvetica, sans-serif;
+		
+	}
+	.header_of_page_header{
+		
+		width:100%;
+		background-color:#003087;
+		/*background-color:#d1d1d1;*/
+		height:50%;
+		margin:0px;
+		border:0px;
+		font-weight: bold;
+		
+	}
+	.header_of_page_header div{
+		
+		margin-left:10%;
+
+		height : 100%;
+	}
+	.header_of_page_header nav {
+		display:inline-block;
+		height : inherit;
+	}
+	.header_of_page_header nav ul li{
+		height : 100%;
+		display:inline-block;
+	}
+	.header_of_page_header nav ul li ul{
+		
+		display:none;
+	}
+	.header_of_page_header ul{
+		margin:0px;
+		padding:0px;
+		border:0px;
+		height : 100%;
+	}
+	.header_of_page_header li{
+		list-style: none;
+		
+	}
+	.header_of_page_header a{
+		text-decoration:none;
+		display:inline-block;
+		color:white;
+		padding:0px 10px;
+		margin-top: 11%;
+ 	}
+
+	#page_header_main_nav_module{
+		margin-left : 50%;
+	}
+	#page_header_sony_console_list{
+		
+		background:linear-gradient(90deg ,#004C87,#0072CE );
+		z-index: 2;
+		box-shadow: -1px 2px  3px grey;
+		height:auto;
+		padding:5px;
+		
+	}
+	#page_header_sony_console_list li {
+		
+		vertical-align:baseline;
+		line-height:50px;
+		display : list-item;
+		height:auto;
+		
+	}
+	#page_header_ps4_console{
+		padding:5px;
+		margin:0px;
+		
+		
+	}
+	#page_header_ps3_console{
+		padding:5px;
+		margin:0px;
+		
+	}
+	#page_header_ps4_menu{
+		z-index: 1;
+		box-shadow: -1px 2px  3px grey;
+		background:linear-gradient(90deg ,#0072CE,#004C87 );
+		height:auto;
+		padding:2px;
+		left:100%;
+		top:0.1px;
+		font-weight:normal;
+	}
+	#page_header_ps4_menu li{
+		display:block;
+		border-radius:5px;
+	}
+	#page_header_ps4_menu li a{
+		
+		margin:0px;
+		height:100%;
+	}
+	#page_header_ps3_menu{
+		z-index: 1;
+		box-shadow: -1px 0px  3px grey;
+		background:linear-gradient(90deg ,#0072CE,#004C87 );
+		height:auto;
+		padding:2px;
+		left:100%;
+		top:0.1px;
+		font-weight:normal;
+	}
+	#page_header_ps3_menu li{
+		display:block;
+		border-radius:5px;
+	}
+	#page_header_ps3_menu li a{
+		
+		margin:0px;
+		height:100%;
+	}
+	
+	
+	
+	#page_header_microsoft_console_list{
+		
+		
+		background:linear-gradient(90deg,#004C87,#0072CE);
+		z-index: 2;
+		box-shadow: -1px 2px  3px grey;
+		height:auto;
+		padding:5px;
+		
+	}
+	#page_header_microsoft_console_list li {
+		
+		vertical-align:baseline;
+		line-height:50px;
+		display : list-item;
+		height:auto;
+		
+	}
+	#page_header_xboxone_console{
+		padding:5px;
+		margin:0px;
+		
+		
+	}
+	#page_header_xbox360_console{
+		padding:5px;
+		margin:0px;
+		
+	}
+	#page_header_xboxone_menu{
+		z-index: 1;
+		box-shadow: -1px 2px  3px grey;
+		background:linear-gradient(90deg ,#0072CE,#004C87 );
+		height:auto;
+		padding:2px;
+		left:100%;
+		top:0.1px;
+		font-weight:normal;
+	}
+	#page_header_xboxone_menu li{
+		display:block;
+		border-radius:5px;
+	}
+	#page_header_xboxone_menu li a{
+		
+		margin:0px;
+		height:100%;
+	}
+	#page_header_xbox360_menu{
+		z-index: 1;
+		box-shadow: -1px 0px  3px grey;
+		background:linear-gradient(90deg ,#0072CE,#004C87 );
+		height:auto;
+		padding:2px;
+		left:100%;
+		top:0.1px;
+		font-weight:normal;
+	}
+	#page_header_xbox360_menu li{
+		display:block;
+		border-radius:5px;
+	}
+	#page_header_xbox360_menu li a{
+		
+		margin:0px;
+		height:100%;
+	}
+	.page_header_footer{
+			background-color:#0072CE;
+			/*background-color:#e6e6e6;*/
+			height:50%;
+			margin:0px;
+			border:0px;
+			
+			
+		}
+		.page_header_footer div{
+			height : 100%;
+			margin-left:10%;
+			
+		}
+		.page_header_footer nav {
+		height : 100%;
+	}
+	.page_header_footer nav ul {
+		height : 100%;
+	}
+	.page_header_footer nav ul li {
+		height : 100%;
+		display:inline-block;
+	}
+	.page_header_footer nav ul li ul{
+		
+		display:none;
+	}
+	.page_header_footer ul{
+		margin:0px;
+		padding:0px;
+		border:0px;
+	
+		
+	}
+	.page_header_footer li{
+		list-style: none;
+		padding:0px 2px;
+	}
+	.page_header_footer a{
+		text-decoration:none;
+		color:white;
+		height: 70%;
+		 display:inline-block;
+		 
+		
+	}
+	.page_header_footer a span{
+		
+		
+		display:block;
+	}
+	.page_header_footer a:hover{
+		
+		border-bottom :solid 5px #5dc21c;
+	}
+	#home_page_login_form{
+		display:none;
+		
+		
+	}
+	#home_page_login_form fieldset{
+		
+		border:0px;
+		margin:0px;
+		padding:0px;
+	}
+	#home_page_login_form input[type='submit']{
+		
+		background:linear-gradient(180deg , #006400, #FFFFFF , #006400);
+		border:none;
+	}
+	#home_page_login_form input[type='text'] , input[type='password']{
+		border:none;
+	}
+		
+		.company_logo{
+			display:inline-block;
+			margin:0px;
+		border:0px;
+		}
+		#page_header_footer_search_form{
+			width:25%;
+			
+		}
+		#page_header_footer_search_form form{
+			
+			height:100%;
+		}
+		.page_header_footer form input[type='submit']{
+		height:60%;
+		padding:0px;
+		width:9%;
+		background-image:url('/img/main/search-icon.svg');
+		background-size:contain;
+		background-repeat:no-repeat;
+		background-color:#FFFFFF;
+		border-right:solid 1px #5dc21c;
+		border-left:solid 1px #5dc21c;
+		border-top:0px;
+		border-bottom:0px;
+		position: relative;
+		right:10%;
+		top:17%;
+		border-top-right-radius: 10px;
+		border-bottom-right-radius: 10px;
+		
+		
+	}
+	.page_header_footer form input[type='search']{
+		border:none;
+		height:60%;
+		padding:0px;
+		border-radius:10px;
+		
+	}
+	.page_header_footer form input::-webkit-input-placeholder { /* WebKit, Blink, Edge */
+    color:    #006400;
+	}
+	.page_header_footer form input:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+   color:    #006400;
+   opacity:  1;
+	}
+	.page_header_footer form input::-moz-placeholder { /* Mozilla Firefox 19+ */
+   color:    #006400;
+   opacity:  1;
+	}	
+	.page_header_footer form input:-ms-input-placeholder { /* Internet Explorer 10-11 */
+   color:    #006400;
+	}
+	.page_header_footer form input:placeholder-shown { /* Standard (https://drafts.csswg.org/selectors-4/#placeholder) */
+  color:    #006400;
+	}
+	.page_body{
+		height:90%;
+		background-color:#FFFFFF;
+		color:#000000;
+		margin:0px auto;
+		width:70%;
+		z-index:0;
+		position:relative;
+		overflow-y:scroll;
+		box-shadow: -3px 0px 5px black , 3px 0px 5px black;
+	}
+	
+	.page_body_header{
+		height:10%;
+	}
+	.page_body_body{
+		height:80%;
+	}
+	
+	#footer_of_homepage_signup_form{
+		
+		
+		
+		border:0px;
+	}
+	.page_body_footer{
+		height:5%;
+	}
+	.module_container{
+	
+	display : inline-block;
+	margin:5%;
+	
+	}
+	.module{
+		
+		
+	}
+	.module header{
+		
+		height:10%;
+		background:linear-gradient(180deg ,#0072CE, #003087);
+		font-family: verdana, helvetica, arial, sans-serif;
+		font-weight: bold;
+		color:white;	
+	}
+	.module_body{
+		
+		height:80%;
+		border-right:solid 2px #d1d1d1;
+		border-left:solid 2px #d1d1d1;
+	}
+	.module_footer{
+		border-bottom:solid 2px #d1d1d1;
+		height:5%;
+	}
+	.table_header{
+		background-color:#e6e6e6;
+	}
+	.table_data{
+		
+		color:white;
+	}
+	.table_data_row{
+		padding:0px 15px;
+	}
+	.table_data_row:nth-child(2n){
+		background:linear-gradient(180deg,#00B000,#006400);
+		
+	}
+	.table_data_row:nth-child(2n-1){
+	
+		background:linear-gradient(180deg,#0072CE,#003087);
+	}
+	tbody{
+		border-right : solid 1px #d1d1d1;
+		border-left : solid 1px #d1d1d1;
+		border-bottom : solid 1px #d1d1d1;
+	}
+	table{
+		border-collapse:collapse;
+		width:100%;
+		
+		
+	}
+	.page_footer{
+		
+		height:5%;
+	    background:linear-gradient(180deg ,#0072CE, #003087);
+		font-family : Arial, Verdana, Helvetica, sans-serif;
+		font-size : 75%;
+		color:white;
+		text-align:center;
+	}
+	.page_footer nav{
+		height:100%;
+	}
+	.page_footer ul{
+		margin: auto;
+		padding:0px auto;
+	}
+	.page_footer li{
+		list-style: none;
+		display: inline-block;
+		
+	}
+	.page_footer a{
+		text-decoration:underline;
+		color:white;
+	}
+@media screen and (max-device-height:1024px) and (max-device-width:1280px){
+	
+
+}
+@media screen and (max-device-height:768px) and (max-device-width:1366px){
+	
+		
+}
+@media screen and (max-device-height:768px) and (max-device-width:1366px){
+	
+		
+}
+

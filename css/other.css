@@ -1,0 +1,719 @@
+
+/* Smartphones (portrait and landscape) ----------- */
+@media only screen and (min-device-width : 320px) and (max-device-width : 480px) {
+
+	 	.page_header {
+		background-color:red;
+		margin:0px;
+		border:0px;
+		height:10%;
+		
+	}
+	.header_of_page_header{
+		height:33%;
+		margin:0px;
+		border:0px;
+	}
+	.body_of_page_header{
+		height:33%;
+		margin:0px;
+		border:0px;
+	}
+		.page_header_footer{
+			height:33%;
+			position:relative;
+			margin:0px;
+		border:0px;
+			
+		}
+		.company_logo{
+			display:inline-block;
+			margin:0px;
+		border:0px;
+		}
+		.page_header_nav{
+			display:inline-block;
+			margin:0px;
+		border:0px;
+		
+		}
+		.page_header_nav ul li{
+			list-style:none;
+			margin:0px 5px;
+			display:inline;
+			
+		}
+		.page_header_nav ul li a{
+			text-decoration:none;
+		}
+	.page_body{
+		height:80%;
+	}
+	
+	.page_body_header{
+		height:20%;
+	}
+	.page_body_body{
+		height:60%;
+	}
+	#home_page_signup{
+		padding: 20px;
+		margin: 0px auto;
+		border: solid 1px;
+		border-radius: 30px;	
+		background-color: blue;
+		color:white;		
+		width:80%;
+		box-shadow: -5px 5px 5px grey;
+	}
+	#home_page_signup header h1{
+		width:350px;
+		margin:0px auto;
+		
+	}
+
+	#manager_signup_form_container{
+		
+		display:inline-block;
+		width:32%;
+		margin-right:5px;
+		padding: 0px 1px;
+		border-right: solid 1px;
+	}
+	#manager_signup_form{
+		width: 65%;
+		margin-left:10%;
+		border-right: solid 1px;
+		padding-right: 30px;
+	}
+	#signin_form_container{
+		
+		display:inline-block;
+		width:33%;
+		vertical-align: top;
+		margin-left:5px;
+		padding: 0px 1px;
+		border-right: solid 1px;
+	
+	}
+	#gamer_signup_form_container{
+		
+		display:inline-block;
+		width:30%;
+		margin-left:10px;
+		padding: 0px 1px;
+		vertical-align: top;
+	}
+	#footer_of_homepage_signup_form{
+		
+		
+		
+		border:0px;
+	}
+	#footer_of_homepage_signup_form p{
+		
+		margin:0px;
+		border:0px;
+		padding:5px;
+	}
+	.page_footer{
+		height:10%;
+		background-color:red;
+	}
+	
+}
+
+/* Smartphones (landscape) ----------- */
+@media only screen and (min-width : 321px) {
+
+	 	.page_header {
+		background-color:red;
+		margin:0px;
+		border:0px;
+		height:10%;
+		
+	}
+	.header_of_page_header{
+		height:33%;
+		margin:0px;
+		border:0px;
+	}
+	.body_of_page_header{
+		height:33%;
+		margin:0px;
+		border:0px;
+	}
+		.page_header_footer{
+			height:33%;
+			position:relative;
+			margin:0px;
+		border:0px;
+			
+		}
+		.company_logo{
+			display:inline-block;
+			margin:0px;
+		border:0px;
+		}
+		.page_header_nav{
+			display:inline-block;
+			margin:0px;
+		border:0px;
+		
+		}
+		.page_header_nav ul li{
+			list-style:none;
+			margin:0px 5px;
+			display:inline;
+			
+		}
+		.page_header_nav ul li a{
+			text-decoration:none;
+		}
+	.page_body{
+		height:80%;
+	}
+	
+	.page_body_header{
+		height:20%;
+	}
+	.page_body_body{
+		height:60%;
+	}
+	#home_page_signup{
+		padding: 20px;
+		margin: 0px auto;
+		border: solid 1px;
+		border-radius: 30px;	
+		background-color: blue;
+		color:white;		
+		width:80%;
+		box-shadow: -5px 5px 5px grey;
+	}
+	#home_page_signup header h1{
+		width:350px;
+		margin:0px auto;
+		
+	}
+
+	#manager_signup_form_container{
+		
+		display:inline-block;
+		width:32%;
+		margin-right:5px;
+		padding: 0px 1px;
+		border-right: solid 1px;
+	}
+	#manager_signup_form{
+		width: 65%;
+		margin-left:10%;
+		border-right: solid 1px;
+		padding-right: 30px;
+	}
+	#signin_form_container{
+		
+		display:inline-block;
+		width:33%;
+		vertical-align: top;
+		margin-left:5px;
+		padding: 0px 1px;
+		border-right: solid 1px;
+	
+	}
+	#gamer_signup_form_container{
+		
+		display:inline-block;
+		width:30%;
+		margin-left:10px;
+		padding: 0px 1px;
+		vertical-align: top;
+	}
+	#footer_of_homepage_signup_form{
+		
+		
+		
+		border:0px;
+	}
+	#footer_of_homepage_signup_form p{
+		
+		margin:0px;
+		border:0px;
+		padding:5px;
+	}
+	.page_footer{
+		height:10%;
+		background-color:red;
+	}
+	
+}
+
+/* Smartphones (portrait) ----------- */
+@media only screen and (max-width : 320px) {
+
+	 	.page_header {
+		background-color:red;
+		margin:0px;
+		border:0px;
+		height:10%;
+		
+	}
+	.header_of_page_header{
+		height:33%;
+		margin:0px;
+		border:0px;
+	}
+	.body_of_page_header{
+		height:33%;
+		margin:0px;
+		border:0px;
+	}
+		.page_header_footer{
+			height:33%;
+			position:relative;
+			margin:0px;
+		border:0px;
+			
+		}
+		.company_logo{
+			display:inline-block;
+			margin:0px;
+		border:0px;
+		}
+		.page_header_nav{
+			display:inline-block;
+			margin:0px;
+		border:0px;
+		
+		}
+		.page_header_nav ul li{
+			list-style:none;
+			margin:0px 5px;
+			display:inline;
+			
+		}
+		.page_header_nav ul li a{
+			text-decoration:none;
+		}
+	.page_body{
+		height:80%;
+	}
+	
+	.page_body_header{
+		height:20%;
+	}
+	.page_body_body{
+		height:60%;
+	}
+	#home_page_signup{
+		padding: 20px;
+		margin: 0px auto;
+		border: solid 1px;
+		border-radius: 30px;	
+		background-color: blue;
+		color:white;		
+		width:80%;
+		box-shadow: -5px 5px 5px grey;
+	}
+	#home_page_signup header h1{
+		width:350px;
+		margin:0px auto;
+		
+	}
+
+	#manager_signup_form_container{
+		
+		display:inline-block;
+		width:32%;
+		margin-right:5px;
+		padding: 0px 1px;
+		border-right: solid 1px;
+	}
+	#manager_signup_form{
+		width: 65%;
+		margin-left:10%;
+		border-right: solid 1px;
+		padding-right: 30px;
+	}
+	#signin_form_container{
+		
+		display:inline-block;
+		width:33%;
+		vertical-align: top;
+		margin-left:5px;
+		padding: 0px 1px;
+		border-right: solid 1px;
+	
+	}
+	#gamer_signup_form_container{
+		
+		display:inline-block;
+		width:30%;
+		margin-left:10px;
+		padding: 0px 1px;
+		vertical-align: top;
+	}
+	#footer_of_homepage_signup_form{
+		
+		
+		
+		border:0px;
+	}
+	#footer_of_homepage_signup_form p{
+		
+		margin:0px;
+		border:0px;
+		padding:5px;
+	}
+	.page_footer{
+		height:10%;
+		background-color:red;
+	}
+	 
+}
+
+/* iPads (portrait and landscape) ----------- */
+@media only screen and (min-device-width : 768px) and (max-device-width : 1024px) {
+/* Styles */
+}
+
+/* iPads (landscape) ----------- */
+@media only screen and (min-device-width : 768px) and (max-device-width : 1024px) and (orientation : landscape) {
+/* Styles */
+}
+
+/* iPads (portrait) ----------- */
+@media only screen and (min-device-width : 768px) and (max-device-width : 1024px) and (orientation : portrait) {
+/* Styles */
+}
+
+/* iPad 3 (landscape) ----------- */
+@media only screen and (min-device-width : 768px) and (max-device-width : 1024px) and (orientation : landscape) and (-webkit-min-device-pixel-ratio : 2) {
+/* Styles */
+}
+
+/* iPad 3 (portrait) ----------- */
+@media only screen and (min-device-width : 768px) and (max-device-width : 1024px) and (orientation : portrait) and (-webkit-min-device-pixel-ratio : 2) {
+/* Styles */
+}
+
+/* Desktops and laptops ----------- */
+@media only screen  and (min-width : 1224px) {
+/* Styles */
+}
+
+/* Large screens ----------- */
+@media only screen  and (min-width : 1824px) {
+/* Styles */
+}
+
+/* iPhone 4 (landscape) ----------- */
+@media only screen and (min-device-width : 320px) and (max-device-width : 480px) and (orientation : landscape) and (-webkit-min-device-pixel-ratio : 2) {
+/* Styles */
+}
+
+/* iPhone 4 (portrait) ----------- */
+@media only screen and (min-device-width : 320px) and (max-device-width : 480px) and (orientation : portrait) and (-webkit-min-device-pixel-ratio : 2) {
+/* Styles */
+}
+
+/* iPhone 5 (landscape) ----------- */
+@media only screen and (min-device-width: 320px) and (max-device-height: 568px) and (orientation : landscape) and (-webkit-device-pixel-ratio: 2){
+/* Styles */
+}
+
+/* iPhone 5 (portrait) ----------- */
+@media only screen and (min-device-width: 320px) and (max-device-height: 568px) and (orientation : portrait) and (-webkit-device-pixel-ratio: 2){
+/* Styles */
+}
+
+/* iPhone 6 (landscape) ----------- */
+@media only screen and (min-device-width: 375px) and (max-device-height: 667px) and (orientation : landscape) and (-webkit-device-pixel-ratio: 2){
+/* Styles */
+}
+
+/* iPhone 6 (portrait) ----------- */
+@media only screen and (min-device-width: 375px) and (max-device-height: 667px) and (orientation : portrait) and (-webkit-device-pixel-ratio: 2){
+/* Styles */
+}
+
+/* iPhone 6+ (landscape) ----------- */
+@media only screen and (min-device-width: 414px) and (max-device-height: 736px) and (orientation : landscape) and (-webkit-device-pixel-ratio: 2){
+/* Styles */
+}
+
+/* iPhone 6+ (portrait) ----------- */
+@media only screen and (min-device-width: 414px) and (max-device-height: 736px) and (orientation : portrait) and (-webkit-device-pixel-ratio: 2){
+/* Styles */
+}
+
+/* Samsung Galaxy S3 (landscape) ----------- 
+*/
+@media only screen and (min-device-width: 320px) and (max-device-height: 640px) and (orientation : landscape) and (-webkit-device-pixel-ratio: 2){
+
+}
+
+/* Samsung Galaxy S3 (portrait) ----------- 
+*/
+@media only screen and (min-device-width: 320px) and (max-device-height: 640px) and (orientation : portrait) and (-webkit-device-pixel-ratio: 2){
+
+}
+
+/* Samsung Galaxy S4 (landscape) ----------- 
+*/
+@media only screen and (min-device-width: 320px) and (max-device-height: 640px) and (orientation : landscape) and (-webkit-device-pixel-ratio: 3){
+	.page_header {
+		background-color:red;
+		margin:0px;
+		border:0px;
+		height:10%;
+		
+	}
+	.header_of_page_header{
+		height:33%;
+		margin:0px;
+		border:0px;
+	}
+	.body_of_page_header{
+		height:33%;
+		margin:0px;
+		border:0px;
+	}
+		.page_header_footer{
+			height:33%;
+			position:relative;
+			margin:0px;
+		border:0px;
+			
+		}
+		.company_logo{
+			display:inline-block;
+			margin:0px;
+		border:0px;
+		}
+		.page_header_nav{
+			display:inline-block;
+			margin:0px;
+		border:0px;
+		
+		}
+		.page_header_nav ul li{
+			list-style:none;
+			margin:0px 5px;
+			display:inline;
+			
+		}
+		.page_header_nav ul li a{
+			text-decoration:none;
+		}
+	.page_body{
+		height:80%;
+	}
+	
+	.page_body_header{
+		height:20%;
+	}
+	.page_body_body{
+		height:60%;
+	}
+	#home_page_signup{
+		padding: 20px;
+		margin: 0px auto;
+		border: solid 1px;
+		border-radius: 30px;	
+		background-color: blue;
+		color:white;		
+		width:80%;
+		box-shadow: -5px 5px 5px grey;
+	}
+	#home_page_signup header h1{
+		width:350px;
+		margin:0px auto;
+		
+	}
+
+	#manager_signup_form_container{
+		
+		display:inline-block;
+		width:32%;
+		margin-right:5px;
+		padding: 0px 1px;
+		border-right: solid 1px;
+	}
+	#manager_signup_form{
+		width: 65%;
+		margin-left:10%;
+		border-right: solid 1px;
+		padding-right: 30px;
+	}
+	#signin_form_container{
+		
+		display:inline-block;
+		width:33%;
+		vertical-align: top;
+		margin-left:5px;
+		padding: 0px 1px;
+		border-right: solid 1px;
+	
+	}
+	#gamer_signup_form_container{
+		
+		display:inline-block;
+		width:30%;
+		margin-left:10px;
+		padding: 0px 1px;
+		vertical-align: top;
+	}
+	#footer_of_homepage_signup_form{
+		
+		
+		
+		border:0px;
+	}
+	#footer_of_homepage_signup_form p{
+		
+		margin:0px;
+		border:0px;
+		padding:5px;
+	}
+	.page_footer{
+		height:10%;
+		background-color:red;
+	}
+}
+
+/* Samsung Galaxy S4 (portrait) ----------- 
+*/
+@media only screen and (min-device-width: 320px) and (max-device-height: 640px) and (orientation : portrait) and (-webkit-device-pixel-ratio: 3){
+
+	 	.page_header {
+		background-color:red;
+		margin:0px;
+		border:0px;
+		height:10%;
+		
+	}
+	.header_of_page_header{
+		height:33%;
+		margin:0px;
+		border:0px;
+	}
+	.body_of_page_header{
+		height:33%;
+		margin:0px;
+		border:0px;
+	}
+		.page_header_footer{
+			height:33%;
+			position:relative;
+			margin:0px;
+		border:0px;
+			
+		}
+		.company_logo{
+			display:inline-block;
+			margin:0px;
+		border:0px;
+		}
+		.page_header_nav{
+			display:inline-block;
+			margin:0px;
+		border:0px;
+		
+		}
+		.page_header_nav ul li{
+			list-style:none;
+			margin:0px 5px;
+			display:inline;
+			
+		}
+		.page_header_nav ul li a{
+			text-decoration:none;
+		}
+	.page_body{
+		height:80%;
+	}
+	
+	.page_body_header{
+		height:20%;
+	}
+	.page_body_body{
+		height:60%;
+	}
+	#home_page_signup{
+		padding: 20px;
+		margin: 0px auto;
+		border: solid 1px;
+		border-radius: 30px;	
+		background-color: blue;
+		color:white;		
+		width:80%;
+		box-shadow: -5px 5px 5px grey;
+	}
+	#home_page_signup header h1{
+		width:350px;
+		margin:0px auto;
+		
+	}
+
+	#manager_signup_form_container{
+		
+		display:inline-block;
+		width:32%;
+		margin-right:5px;
+		padding: 0px 1px;
+		border-right: solid 1px;
+	}
+	#manager_signup_form{
+		width: 65%;
+		margin-left:10%;
+		border-right: solid 1px;
+		padding-right: 30px;
+	}
+	#signin_form_container{
+		
+		display:inline-block;
+		width:33%;
+		vertical-align: top;
+		margin-left:5px;
+		padding: 0px 1px;
+		border-right: solid 1px;
+	
+	}
+	#gamer_signup_form_container{
+		
+		display:inline-block;
+		width:30%;
+		margin-left:10px;
+		padding: 0px 1px;
+		vertical-align: top;
+	}
+	#footer_of_homepage_signup_form{
+		
+		
+		
+		border:0px;
+	}
+	#footer_of_homepage_signup_form p{
+		
+		margin:0px;
+		border:0px;
+		padding:5px;
+	}
+	.page_footer{
+		height:10%;
+		background-color:red;
+	}
+	
+}
+
+/* Samsung Galaxy S5 (landscape) ----------- */
+@media only screen and (min-device-width: 360px) and (max-device-height: 640px) and (orientation : landscape) and (-webkit-device-pixel-ratio: 3){
+
+}
+
+/* Samsung Galaxy S5 (portrait) ----------- 
+*/
+
+@media only screen and (min-device-width: 360px) and (max-device-height: 640px) and (orientation : portrait) and (-webkit-device-pixel-ratio: 3){
+	
+}
