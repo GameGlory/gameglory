@@ -66,6 +66,44 @@ var Page = {
 								clearTimeout(jQuery("#page_header_xbox360_gamers").data('timeoutId'));
 								clearTimeout(jQuery("#page_header_xbox360_leaderboards").data('timeoutId'));
 							return;
+						}else if(element == "#page_header_observe_menu" ){
+							
+							clearTimeout(jQuery("#page_header_observe").data('timeoutId'));
+							
+								return;
+						}else if(element == "#page_header_observe_menu_gameglory"){
+							
+							clearTimeout(jQuery("#page_header_observe_menu_twitch").data('timeoutId'));
+							
+						}else if(element == "#page_header_observe_menu_twitch"){
+							clearTimeout(jQuery("#page_header_observe_menu_gameglory").data('timeoutId'));
+							clearTimeout(jQuery("#page_header_observe_menu_youtube").data('timeoutId'));
+						}else if(element == "#page_header_observe_menu_youtube"){
+							clearTimeout(jQuery("#page_header_observe_menu_twitch").data('timeoutId'));
+							clearTimeout(jQuery("#page_header_observe_menu_recent_videos").data('timeoutId'));
+							
+						}else if(element == "#page_header_observe_menu_recent_videos"){
+							clearTimeout(jQuery("#page_header_observe_menu_youtube").data('timeoutId'));
+							
+							
+						}
+						else if(element == "#page_header_glory_menu" ){
+							clearTimeout(jQuery("#page_header_glory").data('timeoutId'));
+								
+						}else if(element == "#page_header_glory_menu_leagues" ){
+							clearTimeout(jQuery("#page_header_glory_menu_stats").data('timeoutId'));
+								
+						}else if(element == "#page_header_glory_menu_stats" ){
+							clearTimeout(jQuery("#page_header_glory_menu_leagues").data('timeoutId'));
+							clearTimeout(jQuery("#page_header_glory_menu_ranks").data('timeoutId'));
+						}
+						else if(element == "#page_header_glory_menu_ranks" ){
+							clearTimeout(jQuery("#page_header_glory_menu_stats").data('timeoutId'));
+							clearTimeout(jQuery("#page_header_glory_menu_leaderboards").data('timeoutId'));
+								
+						}else if(element == "#page_header_glory_menu_leaderboards" ){
+							clearTimeout(jQuery("#page_header_glory_menu_ranks").data('timeoutId'));
+							
 						}
 						if(jQuery(element).next().is("ul")){
 							if(element == "#page_header_sony_consoles"){
@@ -119,6 +157,22 @@ var Page = {
 									jQuery("#page_header_xboxone_console").next().css("display","none");
 								}
 							}
+							
+							else if(element == "#page_header_observe"){
+								clearTimeout(jQuery("#page_header_observe_menu_gameglory").data('timeoutId'));
+								//clearTimeout(jQuery("#page_header_xbox360_console").data('timeoutId'));
+								jQuery("#page_header_sony_consoles , #page_header_microsoft_consoles , #page_header_glory , #page_header_login" ).animate({opacity: 0.2},200);
+								jQuery(element).next().css({position: "absolute", display: "block"});
+								
+								
+							}else if(element == "#page_header_glory"){
+								//clearTimeout(jQuery("#page_header_xboxone_console").data('timeoutId'));
+								//clearTimeout(jQuery("#page_header_xbox360_console").data('timeoutId'));
+								jQuery("#page_header_sony_consoles , #page_header_microsoft_consoles , #page_header_observe , #page_header_login" ).animate({opacity: 0.2},200);
+								jQuery(element).next().css({position: "absolute", display: "block"});
+								
+								
+							}
 						}
 							if(jQuery(element).parents().is("#page_header_ps4_menu")){
 								jQuery(this).parent().css("background","transparent");
@@ -134,9 +188,16 @@ var Page = {
 							}else if(jQuery(element).parents().is("#page_header_xbox360_menu")){
 								jQuery(this).parent().css("background","transparent");
 								jQuery(this).parent().css("background-color","#5dc21c");
+							}else if(jQuery(element).parents().is("#page_header_observe_menu")){
+								jQuery(this).parent().css("background","transparent");
+								jQuery(this).parent().css("background-color","#5dc21c");
+							}else if(jQuery(element).parents().is("#page_header_glory_menu")){
+								jQuery(this).parent().css("background","transparent");
+								jQuery(this).parent().css("background-color","#5dc21c");
 							}
 							
 					});	
+					
 					jQuery(element).on("mouseout", function(){
 						
 						if(element == "#page_header_sony_consoles"){
@@ -299,7 +360,9 @@ var Page = {
 						},100);
 							jQuery(this).data("timeoutId",t);
 						}
-						if(element == "#page_header_xboxone_gamers" ){
+						
+						
+						else if(element == "#page_header_xboxone_gamers" ){
 							jQuery("#page_header_xboxone_gamers").parent().css("background","linear-gradient(90deg, #0072CE,#004C87 )");
 								jQuery("#page_header_xboxone_gamers").css("color","#FFFFFF");
 								var t = setTimeout(function(){
@@ -385,10 +448,146 @@ var Page = {
 							});
 						},100);
 						jQuery(this).data("timeoutId",t);
+						}else if(element == "#page_header_observe"){
+							
+							var t = setTimeout(function(){
+							jQuery(element).next().fadeOut(50,function(){
+								jQuery(this).css("display" , "none");
+								jQuery("#page_header_microsoft_consoles , #page_header_sony_consoles, #page_header_glory , #page_header_login" ).animate({opacity: 1},100);
+							});
+						},100);
+							jQuery(this).data("timeoutId",t);
+							
+						}else if(element == "#page_header_observe_menu_gameglory"){
+							jQuery("#page_header_observe_menu_gameglory").parent().css("background","linear-gradient(90deg,#004C87 ,#0072CE)");
+								jQuery("#page_header_observe_menu_gameglory").css("color","#FFFFFF");
+								var t = setTimeout(function(){
+								jQuery(element).parent().parent().fadeOut(50,function(){
+								//jQuery(element).parent().css("display" , "none");
+								//jQuery(element).parent().parent().css("display" , "none");
+								jQuery("#page_header_microsoft_consoles , #page_header_sony_consoles,#page_header_observe , #page_header_glory , #page_header_login" ).animate({opacity: 1},100);
+								
+							});
+						},100);
+						jQuery(this).data("timeoutId",t);
+						}
+						else if(element == "#page_header_observe_menu_twitch"){
+							jQuery("#page_header_observe_menu_twitch").parent().css("background","linear-gradient(90deg,#004C87 ,#0072CE)");
+								jQuery("#page_header_observe_menu_twitch").css("color","#FFFFFF");
+								var t = setTimeout(function(){
+								jQuery(element).parent().parent().fadeOut(50,function(){
+								//jQuery(element).parent().css("display" , "none");
+								//jQuery(element).parent().parent().css("display" , "none");
+							
+								
+								jQuery("#page_header_microsoft_consoles ,#page_header_sony_consoles, #page_header_observe , #page_header_glory , #page_header_login" ).animate({opacity: 1},100);
+								
+							});
+						},100);
+						jQuery(this).data("timeoutId",t);
+						}else if(element == "#page_header_observe_menu_youtube"){
+							jQuery("#page_header_observe_menu_youtube").parent().css("background","linear-gradient(90deg,#004C87 ,#0072CE)");
+								jQuery("#page_header_observe_menu_youtube").css("color","#FFFFFF");
+								var t = setTimeout(function(){
+								jQuery(element).parent().parent().fadeOut(50,function(){
+								//jQuery(element).parent().css("display" , "none");
+								//jQuery(element).parent().parent().css("display" , "none");
+							
+								
+								jQuery("#page_header_microsoft_consoles , #page_header_sony_consoles,#page_header_observe , #page_header_glory , #page_header_login" ).animate({opacity: 1},100);
+								
+							});
+						},100);
+						jQuery(this).data("timeoutId",t);
+						}else if(element == "#page_header_observe_menu_recent_videos"){
+							jQuery("#page_header_observe_menu_recent_videos").parent().css("background","linear-gradient(90deg,#004C87 ,#0072CE)");
+								jQuery("#page_header_observe_menu_recent_videos").css("color","#FFFFFF");
+								var t = setTimeout(function(){
+								jQuery(element).parent().parent().fadeOut(50,function(){
+								//jQuery(element).parent().css("display" , "none");
+								//jQuery(element).parent().parent().css("display" , "none");
+								jQuery("#page_header_microsoft_consoles , #page_header_sony_consoles,#page_header_observe , #page_header_glory , #page_header_login" ).animate({opacity: 1},100);
+								
+							});
+						},100);
+						jQuery(this).data("timeoutId",t);
+						}		
+						else if(element == "#page_header_glory"){
+							
+							var t = setTimeout(function(){
+							jQuery(element).next().fadeOut(50,function(){
+								jQuery(this).css("display" , "none");
+								jQuery("#page_header_microsoft_consoles , #page_header_sony_consoles, #page_header_observe , #page_header_login" ).animate({opacity: 1},100);
+							});
+						},100);
+							jQuery(this).data("timeoutId",t);
+							
+						}else if(element == "#page_header_glory_menu_leagues"){
+							jQuery("#page_header_glory_menu_leagues").parent().css("background","linear-gradient(90deg,#004C87 ,#0072CE)");
+								jQuery("#page_header_glory_menu_leagues").css("color","#FFFFFF");
+								var t = setTimeout(function(){
+								jQuery(element).parent().parent().fadeOut(50,function(){
+								//jQuery(element).parent().css("display" , "none");
+								//jQuery(element).parent().parent().css("display" , "none");
+								jQuery("#page_header_microsoft_consoles , #page_header_sony_consoles,#page_header_observe , #page_header_glory , #page_header_login" ).animate({opacity: 1},100);
+								
+							});
+						},100);
+						jQuery(this).data("timeoutId",t);
+						}
+						else if(element == "#page_header_glory_menu_stats"){
+							jQuery("#page_header_glory_menu_stats").parent().css("background","linear-gradient(90deg,#004C87 ,#0072CE)");
+								jQuery("#page_header_glory_menu_stats").css("color","#FFFFFF");
+								var t = setTimeout(function(){
+								jQuery(element).parent().parent().fadeOut(50,function(){
+								//jQuery(element).parent().css("display" , "none");
+								//jQuery(element).parent().parent().css("display" , "none");
+							
+								
+								jQuery("#page_header_microsoft_consoles ,#page_header_sony_consoles, #page_header_observe , #page_header_glory , #page_header_login" ).animate({opacity: 1},100);
+								
+							});
+						},100);
+						jQuery(this).data("timeoutId",t);
+						}else if(element == "#page_header_glory_menu_ranks"){
+							jQuery("#page_header_glory_menu_ranks").parent().css("background","linear-gradient(90deg,#004C87 ,#0072CE)");
+								jQuery("#page_header_glory_menu_ranks").css("color","#FFFFFF");
+								var t = setTimeout(function(){
+								jQuery(element).parent().parent().fadeOut(50,function(){
+								//jQuery(element).parent().css("display" , "none");
+								//jQuery(element).parent().parent().css("display" , "none");
+							
+								
+								jQuery("#page_header_microsoft_consoles ,#page_header_sony_consoles, #page_header_observe , #page_header_glory , #page_header_login" ).animate({opacity: 1},100);
+								
+							});
+						},100);
+						jQuery(this).data("timeoutId",t);
+						}else if(element == "#page_header_glory_menu_leaderboards"){
+							jQuery("#page_header_glory_menu_leaderboards").parent().css("background","linear-gradient(90deg,#004C87 ,#0072CE)");
+								jQuery("#page_header_glory_menu_leaderboards").css("color","#FFFFFF");
+								var t = setTimeout(function(){
+								jQuery(element).parent().parent().fadeOut(50,function(){
+								//jQuery(element).parent().css("display" , "none");
+								//jQuery(element).parent().parent().css("display" , "none");
+								jQuery("#page_header_microsoft_consoles ,#page_header_sony_consoles , #page_header_observe , #page_header_glory , #page_header_login" ).animate({opacity: 1},100);
+								
+							});
+						},100);
+						jQuery(this).data("timeoutId",t);
 						}
 					});
-				}
+				},
+				click : function(element){
+					
+					if(jQuery(element).is("a")){
+						jQuery(element).parent().prev().css("visibility","hidden");
+						jQuery(element).parent().prev().prev().css("visibility","hidden");
+						jQuery(element).next().css({position:"relative",display:"inline-block",bottom:"290%"});
+					}
 			}
+			},
+			
 		},
 		Footer : {
 			
@@ -436,4 +635,18 @@ jQuery(document).ready(function(){
 	Page.PageHeader.Header.Events.hover("#page_header_microsoft_console_list");
 	
 	Page.PageHeader.Header.Events.hover("#page_header_observe");
+	Page.PageHeader.Header.Events.hover("#page_header_observe_menu");
+
+	Page.PageHeader.Header.Events.hover("#page_header_observe_menu_gameglory");
+	Page.PageHeader.Header.Events.hover("#page_header_observe_menu_youtube");
+	Page.PageHeader.Header.Events.hover("#page_header_observe_menu_recent_videos");
+	Page.PageHeader.Header.Events.hover("#page_header_observe_menu_twitch");
+
+	Page.PageHeader.Header.Events.hover("#page_header_glory");
+	Page.PageHeader.Header.Events.hover("#page_header_glory_menu");
+	Page.PageHeader.Header.Events.hover("#page_header_glory_menu_leagues");
+	Page.PageHeader.Header.Events.hover("#page_header_glory_menu_stats");
+	Page.PageHeader.Header.Events.hover("#page_header_glory_menu_ranks");
+	Page.PageHeader.Header.Events.hover("#page_header_glory_menu_leaderboards");
+	
 });

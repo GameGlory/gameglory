@@ -311,47 +311,50 @@ $this->header .="</head>
 									</a>
 									<ul id='page_header_observe_menu'>
 										<li>
-											<a href=''>
+											<a href='' id='page_header_observe_menu_gameglory'>
 												GameGlory
 											</a>
 										</li>
 										<li>
-											<a href=''>
+											<a href='' id='page_header_observe_menu_twitch'>
 												Twitch
 											</a>
 										</li>
 										<li>
-											<a href=''>
+											<a href='' id='page_header_observe_menu_youtube'>
 												YouTube
 											</a>
 										</li>
 										<li>
-											Most Recent Videos
+											<a href='' id='page_header_observe_menu_recent_videos'> 
+												Recent Videos
+											</a>
 										</li>
 									</ul>
 								</li>
+								
 								<li>
 									<a href='' id='page_header_glory'>
 										Glory
 									</a>
 									<ul id='page_header_glory_menu'>
 										<li>
-											<a href=''>
+											<a href='' id='page_header_glory_menu_leagues'>
 												Leagues
 											</a>
 										</li>
 										<li>
-											<a href=''>
+											<a href='' id='page_header_glory_menu_stats'>
 												Stats
 											</a>
 										</li>
 										<li>
-											<a href=''>
+											<a href='' id='page_header_glory_menu_ranks'>
 												Ranks
 											</a>
 										</li>
 										<li>
-											<a href=''>
+											<a href='' id='page_header_glory_menu_leaderboards'>
 												LeaderBoards
 											</a>
 										</li>
@@ -363,7 +366,7 @@ $this->header .="</head>
 			      if($login_form == true){
 				         $this->header .= "
 				         				<li>
-				         				<a href='' id='page_header_login'>
+				         				<a href='#' id='page_header_login' onclick='Page.PageHeader.Header.Events.click(this)'>
 				         					Log In
 				         				</a>
 				         				<form action='/php/login.php' method='post' class='login-form' id='home_page_login_form'>
