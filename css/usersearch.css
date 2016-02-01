@@ -1,0 +1,45 @@
+#user_search_catagory_module_container{
+	width:100%;
+	margin:0px;
+	height:10%;
+	text-align:center;
+	
+}
+#user_search_catagory_module{
+	background: linear-gradient(180deg,#00B000,#006400);
+	height:100%;
+	margin:0px;
+	
+}
+.user_search_catagory{
+	display:inline-block;
+	width:30%;
+	height:100%;
+	border-right:solid 1px #D1D1D1;
+	
+}
+.user_search_catagory:last-of-type{
+	border-right:0px;
+}
+.user_search_catagory span{
+
+	height:100%;
+	display:block;
+	vertical-align: middle;
+	padding-top:10%;
+}
+.user_search_catagory a{
+	text-decoration:none;
+	height:100%;
+	color:#000000;
+	font-weight:600;
+}
+.user_search_catagory a:hover{
+	color:#003087;
+}
+#gamer_search_module_container{
+	display:block;
+}
+#manager_search_module_container{
+	display:none;
+}

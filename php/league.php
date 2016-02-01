@@ -1,26 +1,5 @@
 <?php
 require_once("class.fantasygamingdatabase.php");
-if($_SERVER["REQUEST_METHOD"] == "GET" && $_SERVER["REMOTE_ADDR"] =="::1" && $_GET['ajax']== true){
-	if(strlen(htmlentities($_GET["league_name"])) < 5)
-			exit;
-		$mysql_connection = new FantasyGamingDataBase();
-		if(isset($_GET["league_name_valid"])){
-			$params = array("%".htmlentities($_GET['league_name']."%"));
-			$league_name = $mysql_connection->selectQuery("select name from leagues where name like ?",$params);
-			
-			if(is_array($league_name)){
-				foreach ($league_name as $row){
-				
-					if($row == htmlentities($_GET["league_name"])){
-						echo "<div><span>This name has already been used.</span></div>";
-						break;
-					}
-				}
-			}
-		}
-		$mysql_connection = null;
-		exit;
-}
 require_once("class.page.php");
 require_once("class.user.php");
 require_once("class.gamer.php");
@@ -597,6 +576,7 @@ class LeaguePage extends Page{
 				<div class='module_footer' id='league_module_footer'>
 				</div>
 			</div>
+		</div>
 		</div>
 		</div>
 		</div>

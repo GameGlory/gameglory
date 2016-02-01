@@ -33,7 +33,7 @@
 	}else{
 		 //$leagues = $leagues->fetch_assoc();
 		 $teams = null;
-		print_r($leagues);
+		//print_r($leagues);
 		 foreach($leagues as $key){
 				  
 				 $this->body .= "{$key}";

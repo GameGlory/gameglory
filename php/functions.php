@@ -1,7 +1,4 @@
 <?php
-	
-	define(DRAFT_AJAX_ON, "X-Ajax-Draft : true");
-	
 	function setUser(){
 		global $user;
 		if(session_status() == PHP_SESSION_ACTIVE){

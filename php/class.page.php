@@ -84,7 +84,7 @@ class Page extends BasePage{
 	             	break;
 	             	case "league.php" : $scripts = array("js" => array("<script src='/js/league.js' type='text/javascript'></script>" , "<script type='text/javascript' src='/js/jquery.mousewheel-3.0.6.pack.js'></script>" , "<script type='text/javascript' src='/js/jquery.fancybox.pack.js?v=2.1.5'></script>", "<script type='text/javascript'> $(document).ready(function() { $('.fancybox').fancybox(); }); </script>"),"css" => array("<link type='text/css' rel='stylesheet' href='/css/league.css'>", "<link rel='stylesheet' href='/css/jquery.fancybox.css?v=2.1.5' type='text/css' media='screen' />")); $title_tag = "Gamer Leagues";
 	             	break;
-	             	case "gamer.php" : $scripts = array("js" => array("<script src='/js/gamerprofile.js' type='text/javascript'></script>"),"css" => array("<link type='text/css' rel='stylesheet' href='/css/gamerprofile.css'>")); $title_tag = "Gamer Profile";
+	             	case "gamer.php" : $scripts = array("js" => array("<script src='/js/gamer.js' type='text/javascript'></script>"),"css" => array("<link type='text/css' rel='stylesheet' href='/css/gamer.css'>")); $title_tag = "Gamer Profile";
 	             	break;
 					case "projections.php" : $scripts = array("js" => array("<script src='/js/projections.js' type='text/javascript'></script>"),"css" => array("<link type='text/css' rel='stylesheet' href='/css/projections.css'>")); $title_tag = "Projections";
 	             	break;
@@ -108,7 +108,7 @@ class Page extends BasePage{
 			          break;
 			          case "league.php" : $scripts = array("js" => array("<script src='/js/league.js' type='text/javascript'></script>" , "<script type='text/javascript' src='/js/jquery.mousewheel-3.0.6.pack.js'></script>" , "<script type='text/javascript' src='/js/jquery.fancybox.pack.js?v=2.1.5'></script>","<script type='text/javascript'> $(document).ready(function() { $('.fancybox').fancybox(); }); </script>"),"css" => array("<link type='text/css' rel='stylesheet' href='/css/league.css'>", "<link rel='stylesheet' href='/css/jquery.fancybox.css?v=2.1.5' type='text/css' media='screen' />"));  $title_tag = "Gamer Leagues";
 			          break;
-			          case "gamer.php" : $scripts = array("js" => array("<script src='/js/gamerprofile.js' type='text/javascript'></script>"),"css" => array("<link type='text/css' rel='stylesheet' href='/css/gamerprofile.css'>")); $title_tag = "Gamer Profile";
+			          case "gamer.php" : $scripts = array("js" => array("<script src='/js/gamer.js' type='text/javascript'></script>"),"css" => array("<link type='text/css' rel='stylesheet' href='/css/gamer.css'>")); $title_tag = "Gamer Profile";
 			          break;
 					  case "projections.php" : $scripts = array("js" => array("<script src='/js/projections.js' type='text/javascript'></script>"),"css" => array("<link type='text/css' rel='stylesheet' href='/css/projections.css'>")); $title_tag = "Projections";
 	             	break;
@@ -140,6 +140,8 @@ class Page extends BasePage{
 	          break;
 	          case "gamesearch.php" : $scripts = array("js" => array("<script src='/js/gamesearch.js' type='text/javascript'></script>"),"css" => array("<link type='text/css' rel='stylesheet' href='/css/gamesearch.css'>")); $title_tag = "Search for Games";
 	          break;
+			  case "gamer.php" : $scripts = array("js" => array("<script src='/js/gamer.js' type='text/javascript'></script>"),"css" => array("<link type='text/css' rel='stylesheet' href='/css/gamer.css'>")); $title_tag = "Gamer Profile";
+			          break;
 			  case "projections.php" : $scripts = array("js" => array("<script src='/js/projections.js' type='text/javascript'></script>"),"css" => array("<link type='text/css' rel='stylesheet' href='/css/projections.css'>")); $title_tag = "Projections";
 	             	break;
 					case "news.php" : $scripts = array("js" => array("<script src='/js/news.js' type='text/javascript'></script>"),"css" => array("<link type='text/css' rel='stylesheet' href='/css/news.css'>")); $title_tag = "Gamer News";
@@ -379,7 +381,13 @@ $this->header .="</head>
 							            </li>
 							            ";
 				     }else{
-				     
+				     	$this->header .="
+				     		<li>
+				     			<a href='/php/logout.php'>
+				     				Sign out
+				     			</a>
+				     		</li>
+				     	";
 					    } 
 			   
 				$this->header .= "
@@ -401,23 +409,23 @@ $this->header .="</head>
 								</a>
 							</li>
 							<li>
-								<a href=''>
+								<a href='/php/usersearch.php#gamers' id='page_header_footer_gamers'>
 									<span>
-										Gamers
+										Grinders
 									</span>
 								</a>
 							</li>
 							<li>
-								<a href=''>
+								<a href='/php/usersearch.php#managers' id='page_header_footer_managers'>
 									<span>
-										Managers
+										Officials
 									</span>
 								</a>
 							</li>
 							<li>
-								<a href='/php/projections.php'>
+								<a href='/php/league.php'>
 									<span>
-										Projections
+										Leagues
 									</span>
 								</a>
 							</li>

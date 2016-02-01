@@ -457,19 +457,25 @@ html {
 	}
 	.table_data{
 		
-		color:white;
+		
 	}
 	.table_data_row{
 		padding:0px 15px;
 		border-bottom:solid 1px #d1d1d1
+		
 	}
 	.table_data_row:nth-child(2n){
 		background:linear-gradient(180deg,#00B000,#006400);
+		color:#000000;
+		text-align: center;
 		
 	}
 	.table_data_row:nth-child(2n-1){
 	
 		background:linear-gradient(180deg,#0072CE,#003087);
+		color:#FFFFFF;
+		text-align: center;
+		
 	}
 	tbody{
 		border-right : solid 1px #d1d1d1;

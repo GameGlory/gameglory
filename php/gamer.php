@@ -23,7 +23,7 @@ class GamerProfilePage extends Page{
 		session_name("fgs");
 		session_start();
 		$id = null;
-			$id = $_GET["id"];
+			$id = htmlentities($_GET["id"]);
 		
 				if(isset($_SESSION["user"])){
 					 $user = unserialize($_SESSION["user"]);
@@ -45,7 +45,7 @@ class GamerProfilePage extends Page{
 				if(!empty($psn_tag)){
 					$psn_profile = unserialize($result["psn_profile"]);
 				}
-				if($user->type == "gamer"){
+				
 					
 				$this->body="
 					<section class='page_body'>
@@ -58,7 +58,7 @@ class GamerProfilePage extends Page{
 					
 					$this->body .="</div>
 					<div class='module_container' id='gamer_profile_module_container'>
-						<div class='module_content' id='gamer_profile_module'>
+						<div class='module' id='gamer_profile_module'>
 							<header class='module_header' id='gamer_profile_module_header'>
 								<span class='username_display'>
 									{$name}
@@ -68,7 +68,7 @@ class GamerProfilePage extends Page{
 			
 							if(isset($xbox_profile)){
 								$this->body .="<div>
-								<img class='xbox_profile_pic' id='{$name}_xbox_profile_pic' src='{$xbox_profile['AppDisplayPicRaw']}'/>
+								<img class='xbox_profile_pic' id='gamer_xbox_profile_pic' src='{$xbox_profile['AppDisplayPicRaw']}'/>
 								</div>";
 							}
 							if(isset($psn_profile)){
@@ -79,12 +79,7 @@ class GamerProfilePage extends Page{
 							$this->body .="
 							<div class='profile_page_contact_information'>
 								<div>
-									<span>
-										Email:
-										<a href='mailto:{$email}'>
-											{$email}
-										</a>
-									<span>
+								
 								</div>
 							
 							</div>
@@ -330,284 +325,7 @@ class GamerProfilePage extends Page{
 					
 					$mysql->close();
 					
-			}else{
 			
-					$this->body .="
-					<section class='page_body'>
-					<div class='page_body_header'>";
-					if($this->checkForErrors()){
-			
-						$this->body .= $this->getErrorModule();
-						$_SESSION["error"] = null;
-					}
-					
-					$this->body .="</div>
-					<div class='module_container' id='gamer_profile_module_container'>
-						<div class='module_content' id='gamer_profile_module'>
-							<header class='module_header' id='gamer_profile_module_header'>
-								<span class='username_display'>
-									{$name}
-								</span>
-							";
-							
-							if(isset($xbox_profile)){
-								$this->body .="<div>
-								<img class='xbox_profile_pic' id='{$name}_xbox_profile_pic' src='{$xbox_profile['AppDisplayPicRaw']}'/>
-								<div>";
-							}
-							if(isset($psn_profile )){
-								$this->body .="<div>
-								<img class='psn_profile_pic' id='{$name}_psn_profile_pic' src=''/>
-								<div>";
-							}
-							$this->body .="
-							<div class='profile_page_contact_information'>
-								<div>
-									<span>
-										Email:
-										<a href='mailto:{$email}'>
-											{$email}
-										</a>
-									<span>
-								</div>
-							
-							</div>
-							</header>
-							<div class='module_body' id='gamer_profile_module_body'>
-								<div class='module_body_header' id='gamer_profile_module_body_header'>
-								<div>
-								<div class='module_body_body' id='gamer_profile_module_body_body'>
-									<div class='gamer_profile_rank_section'>
-										<img />
-										<span class='gamer_rank_display'>
-											{$rank}
-										</span>
-									</div>
-									<div class='gamer_profile_games_played_section'>
-										<table>
-											<tr>
-												<th>
-													Name
-												</th>
-												<th>
-													Console
-												</th>
-												<th>
-													Genre
-												</th>
-												<th>
-													Stats
-												</th>
-											</tr>
-											<tbody>";
-											
-											if(!empty($games["xbox"]["xboxone"])){
-												
-												foreach($games["xbox"]["xboxone"] as $key =>$value){
-													//print_r($value);
-													if($key == "gamerscore")
-														continue;
-														
-													$game_details = $mysql->selectQuery("select details from games where name = '{$mysql->connection->real_escape_string($key)}' ")->fetch_assoc();
-													
-													
-													$genre = unserialize($game_details["details"]);
-												
-													$this->body .="
-													<tr>
-														<td>
-															{$key}
-														</td>
-														<td>
-															Xbox One
-														</td>
-														<td>
-														{$genre['genres'][0]}
-														</td>
-														<td>
-														<ul>
-															
-														";
-														if(!empty($value["ingamestats"])){
-															$this->body .="
-																<li>
-																	In-Game Stats
-																	<ul>";
-																	foreach($value["ingamestats"] as $k => $v) {
-																		$this->body .="
-																				<li>
-																				{$k} : {$v}
-																				</li>
-																			
-																		";
-																	}
-																		
-																$this->body .="</ul>
-																</li>
-																
-																<li>
-																	General Stats
-																	<ul>";
-																		foreach($value["generalstats"] as $k => $v) {
-																			if($k == "MinutesPlayed" || $k == "GameProgress")
-																				continue;
-																		$this->body .="
-																				<li>
-																				{$k} : {$v}
-																				</li>
-																			
-																		";
-																	}
-																$this->body .="
-																</ul>
-																</li>
-																<li>
-																	Achievements
-																	<ul>";
-																	foreach($value["achievements"] as $k => $v) {
-																		
-																			$this->body .="
-																				<li>
-																					{$v['name']} : {$v['description']} 
-																				</li>
-																			
-																		";
-																		
-																		
-																		
-																	}
-																$this->body .="
-																</ul>
-																</li>
-																<li>
-																	Game Completion
-																		<div>
-																			<span>
-																				{$value["generalstats"]["GameProgress"]}
-																			</span>
-																		<div>
-																</li>
-																<li>
-																	Time Played
-																	<div>
-																			<span>
-																				{$value["generalstats"]["MinutesPlayed"]}
-																			</span>
-																		<div>
-																</li>
-																";
-																	
-															}else{
-																$this->body .="
-																<li>
-																	General Stats
-																	<ul>";
-																		foreach($value["generalstats"] as $k => $v) {
-																			if($k == "MinutesPlayed" || $k == "GameProgress")
-																				continue;
-																		$this->body .="
-																				<li>
-																				{$k} : {$v}
-																				</li>
-																			
-																		";
-																	}
-																$this->body .="
-																</ul>
-																</li>
-																<li>
-																	Achievements
-																	<ul>";
-																	foreach($value["achievements"] as $k => $v) {
-																		
-																			$this->body .="
-																				<li>
-																					{$v['name']} : {$v['description']}
-																				</li>
-																			
-																		";
-																		
-																	}
-																$this->body .="
-																</ul>
-																</li>
-																<li>
-																	Game Completion
-																		<div>
-																			<span>
-																				{$value["generalstats"]["GameProgress"]}
-																			</span>
-																		<div>
-																</li>
-																<li>
-																	Time Played
-																	<div>
-																			<span>
-																				{$value["generalstats"]["MinutesPlayed"]}
-																			</span>
-																		<div>
-																</li>
-																";
-															}
-															
-														$this->body.= "
-														</ul>
-														</td>
-													</tr>
-													";
-												}
-											}
-											$this->body .="</tbody>
-										</table>
-									</div>
-									<div class='gamer_profile_leagues_section'>
-										<table>
-											<tr>
-												<th>
-													Name
-												</th>
-												<th>
-													Teams
-												</th>
-												<th>
-													Status
-												</th>
-												<th>
-													Performance
-												</th>
-											</tr>
-										</table>
-									</div>
-									<div class='gamer_activity_section'>
-										<div class='xboxone_activity'>";
-											foreach ($xbox_activity as $key => $value) {
-													$this->body .="
-														<div class='gamer_activity'>
-															<span>
-																{$value['description']} for  {$value['platform']} on {$value['date']}
-															</span>
-														</div>
-													";
-											}
-										$this->body.="</div>
-									</div>
-								</div>
-								<div class='module_body_footer' id='gamer_profile_module_body_footer'>
-								<div>
-							</div>
-							<div class='module_footer' id='gamer_profile_module_footer'>
-									<header class='module_footer_header'>
-									</header>
-							</div>
-							<div class='page_body_footer'>
-							
-							</div>
-							
-					";
-					
-					
-					$mysql->close();
-			}
 				
 			}else{
 				header("Location:404.php");

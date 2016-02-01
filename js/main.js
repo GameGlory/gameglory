@@ -45,7 +45,7 @@ var Page = {
 						return;
 						}
 						else if(element == "#page_header_microsoft_console_list"){
-							console.log("me");
+						
 							clearTimeout(jQuery("#page_header_microsoft_consoles").data('timeoutId'));
 							
 							return;
@@ -590,7 +590,15 @@ var Page = {
 			
 		},
 		Footer : {
-			
+			Events:{
+				click: function(){
+					jQuery("#page_header_footer_officials").on("click",function(){
+						
+						window.location.hash = "#managers";
+		
+					});
+				}
+			}
 		}
 	},
 	
