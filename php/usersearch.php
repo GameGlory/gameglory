@@ -36,7 +36,7 @@ require_once("functions.php");
 								<div class='user_search_catagory' id='user_search_gamers_catagory'>
 									<span>
 										<a href='#gamers'>
-											Gamers
+											Grinders
 										</a>
 									</span>
 								</div>
@@ -47,10 +47,10 @@ require_once("functions.php");
 										</a>
 									</span>
 								</div>
-								<div class='user_search_catagory' id='user_search_journalist_catagory'>
+								<div class='user_search_catagory' id='user_search_games_catagory'>
 									<span>
 										<a href='#'>
-											Journalist
+											Games
 										</a>
 									</span>
 								</div>
@@ -67,9 +67,11 @@ require_once("functions.php");
 							$search_term = htmlentities($_GET["search_for"]);
 							$gamers   = $mysql_connection->selectQuery("select id , username , xbox_id,psn_id, rank from gamers where username like '%{$search_term}%'");
 						$managers = $mysql_connection->selectQuery("select id, username from managers where username like '%{$search_term}%'");
+						$games = $mysql_connection->selectQuery("select id,name,console,details from games where name like '%{$search_term}%'");
 						}else if(empty($_GET["search_for"])){
 							$gamers   = $mysql_connection->selectQuery("select id , username , xbox_id,psn_id, rank from gamers");
 						$managers = $mysql_connection->selectQuery("select id, username from managers");
+						$games = $mysql_connection->selectQuery("select id,name,console,details from games");
 						}else{
 							
 						}
@@ -122,6 +124,72 @@ require_once("functions.php");
 										</td>
 										<td class='table_data' >
 					        				" . $gamer["rank"] . "
+										</td>
+									</tr>
+										
+					        	";
+					        }
+					        
+						
+					$this->body .="
+					</tbody>
+					</table>
+						</div>
+						</div>
+					</div>	
+					
+					
+					";
+			 }
+			 if($games->num_rows == 0){
+							
+								$this->body .="
+								<div class='search_result' id='no_search_results'>
+			        				<span>
+			        					No Games Found.
+			        				</span>
+								</div>
+								</div>
+								</div>
+								
+			        		";
+						}else{
+								$this->body .= "
+							<table>
+								<tbody>
+							<tr class='table_header'>
+								<th>
+									Name
+								</th>
+								<th>
+									Console
+								</th>
+								<th>
+									Players
+								</th>
+								<th>
+									Summary
+								</th>
+							</tr>
+			        	";
+							
+								
+								foreach($games as $game ){
+									
+					        	$this->body .= "
+					        		
+					        		<tr class='table_data_row'>
+										<td class='table_data' >
+					        				<a href=''>" . $game["username"] . "
+										</td>
+										<td class='table_data'>
+					        				" . $game["console"] . "
+										</td>
+										<td class='table_data'>
+					        				" . $game["number_of_players"] . "
+										</td>
+										<td class='table_data' >
+					        				" . $game["details"] . "
 										</td>
 									</tr>
 										

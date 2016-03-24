@@ -1,4 +1,170 @@
-.xbox_profile_pic{
-	width:10%;
-	height:10%;
+#gamer_profile_header{
+	
+	background: #0062CE;
+	
+}
+
+#gamer_profile_header header{
+	
+	z-index:10;
+	position:relative;
+	top:70px;
+	background:linear-gradient(180deg,#0072CE, #001087);
+	color:white;
+	font-size:1.5em;
+}
+
+#profile_header_username{
+	margin-left:15%;
+}
+#ps4_container{
+	
+	padding:3%;
+}
+#ps4 {
+	display:inline-block;
+		padding: 5px;
+	border:solid 2px #5DC21C;	
+	border-radius : 100px;
+	margin-left:35%;
+	margin-right:5%;
+	width:5%;
+}
+#xboxone{
+	display:inline-block;
+	padding: 5px;
+	border:solid 2px #5DC21C;	
+	border-radius : 100px;
+	margin:0px auto;
+	width:5%;
+}
+#ps4 img{
+	
+
+}
+#xboxone img{
+	
+}
+#gamer_profile_header_footer{
+	position:absolute;
+	width:76%;
+	left:24%;
+	background:linear-gradient(180deg,#0072CE, #003087);
+	color:white;
+}
+#gamer_profile_header_footer_nav{
+	width:80%;
+	
+}
+#gamer_profile_profiles_list{
+	position:absolute;
+}
+#gamer_profile_header_footer ul{
+	
+
+}
+#gamer_profile_header_footer li{
+	
+	list-style: none;
+	margin :0px 5%;
+	display:inline-block;
+
+}
+#gamer_profile_header_footer a{
+	
+	text-decoration: none;
+	color:inherit;
+}
+
+#gamer_profile_header_footer li span{
+	
+
+}
+#gamer_profile_games_container{
+	
+	position:absolute;
+	visibility:hidden;
+}
+#xbox_profile_pic{
+	position:absolute;
+	top:30%;
+	left:5%;
+}
+#xbox_profile_pic img{
+	
+	width:15%;
+	height:15%;
+}
+#psn_profile_pic{
+	position:absolute;
+	top:30%;
+	left:15%;
+}
+#psn_profile_pic img{
+	
+	width:70%;
+	height:75%;
+}
+
+
+#gamer_profile_games_table{
+
+}
+#gamer_profile_games_table td{
+	font-size:small;
+	padding:0px;
+	margin:0px;
+}
+
+#gamer_profile_table_stats{
+	margin:0px;
+	padding: 0px;
+}
+#gamer_profile_table_stats li{
+	
+	list-style: none;
+	display:inline-block;
+}
+
+.gamer_profile_table_stat{
+	display:none;
+	margin:0px;
+}
+
+#xbox_profile_header_info_containter{
+	padding:10px 20px;
+
+	
+}
+#xbox_profile_header_basic_info{
+	vertical-align:top;
+}
+#xbox_profile_header_stat_info{
+	vertical-align:bottom;
+	margin-left:25%;
+}
+#xbox_profile_name{
+	font-weight:600;
+	font-size:larger;
+}
+#xbox_profile_gamertag{
+	font-weight:300;
+	font-size:large;
+}
+#xbox_profile_location{
+	font-weight:bold;
+	font-size:medium;
+}
+#xbox_profile_reputation_header{
+	font-weight:300;
+	font-size:larger;
+}
+#xbox_profile_avatar{
+	
+}
+#xbox_profile_avatar_bubble{
+	position:absolute;
+	padding:20px;
+	bottom:20%;
+	left:13%;
 }

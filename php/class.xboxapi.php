@@ -7,7 +7,8 @@ require_once("class.fantasygamingdatabase.php");
 		
 		  const KEY = "2f09c59923776d3e5a262bd6b7b14a6ce1c99134";
 		  const URL_ROOT = "https://xboxapi.com";
-		    public function __construct($gamer = null){
+		  
+		  public function __construct($gamer = null){
 		    	if($gamer != null){
 			    if($gamer instanceof Gamer){
 			  		$this->url_root = "https://xboxapi.com";
@@ -46,7 +47,7 @@ require_once("class.fantasygamingdatabase.php");
 				$mysql_connection = new FantasyGamingDataBase();
 				$params = array($gamer_tag);
 				$result = $mysql_connection->selectQuery("select * from gamers where xbox_id = ?",$params);
-				$mysql_connection->close();
+				
 				if(empty($result)){
 					curl_close($url);
 					return true;
@@ -55,6 +56,7 @@ require_once("class.fantasygamingdatabase.php");
 					curl_close($url);
 					return false;
 				}
+				$mysql_connection->close();
 			}
 			}catch(Exception $ex){
 	    		$ex->goToPreviousPage();
@@ -446,7 +448,7 @@ require_once("class.fantasygamingdatabase.php");
 		 	
 		 }
 		 }
-		 static public function getGamer360Games($uid){
+		 public function getGamer360Games($uid){
 		 	
 			try{
 			$url = curl_init(XboxApi::URL_ROOT . "/v2/{$uid}/xbox360games");
@@ -489,7 +491,7 @@ require_once("class.fantasygamingdatabase.php");
 					print_r($ex);
 				}
 		 }
-		 static public function getGamerXboxOneGames($uid){
+		 public function getGamerXboxOneGames($uid){
 		 	
 			try{
 			$url = curl_init(XboxApi::URL_ROOT . "/v2/{$uid}/xboxonegames");

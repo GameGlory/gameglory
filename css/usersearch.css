@@ -6,7 +6,7 @@
 	
 }
 #user_search_catagory_module{
-	background: linear-gradient(180deg,#00B000,#006400);
+	background-color: #0062CE;
 	height:100%;
 	margin:0px;
 	
@@ -35,7 +35,7 @@
 	font-weight:600;
 }
 .user_search_catagory a:hover{
-	color:#003087;
+	color:white;
 }
 #gamer_search_module_container{
 	display:block;

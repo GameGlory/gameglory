@@ -578,14 +578,16 @@ var Page = {
 						}
 					});
 				},
-				click : function(element){
+				click : function(element){	
 					
 					if(jQuery(element).is("a")){
-						jQuery(element).parent().prev().css("visibility","hidden");
-						jQuery(element).parent().prev().prev().css("visibility","hidden");
-						jQuery(element).next().css({position:"relative",display:"inline-block",bottom:"290%"});
+						jQuery(element).css({visibility : "hidden",postion:"absolute"});
+						jQuery(element).parent().prev().css({visibility : "hidden",postion:"absolute"});
+						jQuery(element).parent().prev().prev().css({visibility : "hidden",postion:"absolute"});
+						jQuery(element).next().css({position:"relative",display:"inline-block",bottom:"336%",width:"90%"});
+						
 					}
-			}
+				}
 			},
 			
 		},

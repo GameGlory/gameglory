@@ -7,6 +7,7 @@ require_once("php/class.manager.php");
 require_once("php/class.error.php");
 require_once("php/class.destinyapi.php");
 require_once("php/functions.php");
+
 class HomePage extends Page{
 		
 	public function __construct($user){
@@ -67,7 +68,7 @@ class HomePage extends Page{
                   			
                   			
 	                  		foreach ($result as $key ) {
-								 		$xbox_pics = unserialize($key["xbox_pics"]);
+								 		$xbox_pics = json_decode($key["xbox_pics"]);
 								 		$psn_pics = unserialize($key["psn_pics"]);
 								 	
 								 if(!empty($xbox_pics) && !empty($psn_pics)){
@@ -82,7 +83,7 @@ class HomePage extends Page{
 								 }else if(!empty($xbox_pics)){
 								 	 $this->body .="<tr class='table_data_row' id='top_ten_module_table_data'>
 								 	<td class='table_data'>
-								 	<img src='{$xbox_pics['small']}'/>
+								 	<img src='{$xbox_pics->small}'/>
 								 		<a href='php/gamer.php?id={$key['id']} '>
 								 		{$key['username']}
 										</a>
@@ -191,9 +192,10 @@ class HomePage extends Page{
 }
 
 try{
-
-	setUser();
+	
+	setUser();	
 	$page = new HomePage($user);
+
 
 
 }catch(Exception $ex){

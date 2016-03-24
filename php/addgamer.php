@@ -4,181 +4,239 @@ require_once("class.user.php");
 require_once("class.gamer.php");
 require_once("class.xboxapi.php");
 require_once("class.psnapi.php");
+require_once("functions.php");
+require_once("class.email.php");
+class AddGamerException extends Exception{///Start of class ////////////////////
+	
+	
+	
+};//////End of class ////////////////////////////////////
 
-class AddGamerException extends Exception{
+
+class AddGamer{///Start of class ///////////////////////
 	
+	public  $gamer               = null;
+	private $name            	 = null;
+	private $email           	 = null;
+	private $password         	 = null;
+	private $birthday         	 = null;
+	private $xbox_tag         	 = null;
+ 	private $psn_tag          	 = null;
+	private $database_connection = null;
+       
 	
-	//end of class ///////////////
-}
-function __autoload($class){
-	$class = strtolower($class);
-	include("class.{$class}.php");
-}
-function setXboxOneGames($mysql_connection,$games,$gamer,$xbox_api){
-	
-	 $gamer->games = $games;
-	
-	$console = serialize(array("xboxone"));
-	foreach($games["xbox"]["xboxone"] as $key => $value){
-		$r = $mysql_connection->selectQuery("select * from games where name = '{$mysql_connection->connection->real_escape_string($value)}'");
-		if(empty($r) || $r->num_rows == 0){
-			//print_r($value);
-			$game_id = $xbox_api->getGameId($value,$gamer->xuid);
-			$game_details = serialize($xbox_api->getGameDetails(dechex($game_id)));
-			
-			
-			if(!empty($game_details)){
-				
-				if($value == "Destiny"){
-					//print_r(var_dump($game_details));
-					$mysql_connection->insertQuery("insert into games (name,console,has_stats,xbox_title_id,details) values('{$mysql_connection->connection->real_escape_string($value)}','{$console}',1,{$game_id},'{$mysql_connection->connection->real_escape_string($game_details)}')");
-				}else{
-					//print_r(var_dump($game_details));
-					
-					$mysql_connection->insertQuery("insert into games (name,console,has_stats,xbox_title_id,details) values('{$mysql_connection->connection->real_escape_string($value)}','{$console}',0,{$game_id},'{$mysql_connection->connection->real_escape_string($game_details)}')");
-					
-				}
+	public function __construct($name,$email,$password,$birthday,$xbox_tag=null,$psn_tag=null){
 		
-			}else{
+		$this->name     		   = htmlentities($name);
+		$this->email    		   = htmlentities($email);
+		$this->password 	 	   = htmlentities($password);
+		$this->birthday 		   = htmlentities($birthday);
+		$this->xbox_tag 	 	   = htmlentities($xbox_tag);
+		$this->psn_tag  	  	   = htmlentities($psn_tag);
+		$this->database_connection = new FantasyGamingDataBase();
+		if($this->xbox_tag == null && $this->psn_tag == null)
+			throw new AddGamerException("A Xbox Live or PSN username must be specified.");
+		
+	}
+	
+	public function insertGamerIntoDatabase(){
+		
+		$this->password = sha1($this->password);
+		$params = array("name" =>$this->name , "password"=>$this->password, "xbox_id" =>$this->xbox_tag,"psn_id"=>$this->psn_tag,"email"=>$this->email,"age"=>$this->birthday,"signed_in"=>0);
+		$insert = $this->database_connection->insertQuery("insert into gamers (username , password   , xbox_id , psn_id ,email , birthday,signed_in)values( ? , ? , ? , ? , ?,?,?)",$params);
+		
+		if(!$insert)
+			throw new AddGamerException("A database error occurred.");
+	}
+	public function setGamerData(){
+			
+		$xbox_api = null;
+		$psn_api  = null;
+		$profile  = null;
+		$users_games = null;
+		$xuid  = null;
+		$id    = null; 
+		$gamer = null;
+	
+		$profile = array("xbox" => array("gamercard" => array() , "profile" => array()) , "ps" => array());
+		$users_games = array("xbox" => array("xbox360" => array() , "xboxone" => array() ) , "ps" => array("ps3" => array() , "ps4" => array()));
+		if(!empty($this->xbox_tag)){
+			
+			$xbox_api = new XboxApi();
+			
+			//print_r($xbox_api);
+			
+			$xuid = $xbox_api->getGamerUserId(urlencode($this->xbox_tag));
+			$profile["xbox"]["gamercard"]=$xbox_api->getGamerCard($xuid);
+			$profile["xbox"]["profile"]=$xbox_api->getGamerProfile($xuid);
+			$users_games["xbox"]["xbox360"] = $xbox_api->getGamer360Games($xuid) ; 
+			$users_games["xbox"]["xboxone"] = $xbox_api->getGamerXboxOneGames($xuid) ; 
+			foreach($users_games["xbox"]["xbox360"] as $key){
+					
+					$game_id = $xbox_api->getGameId($key,$xuid);
+					$details = serialize($xbox_api->getGameDetails($game_id));
+					$old_game = $this->database_connection->selectQuery("select * from games where name = '{$key}'");
+					echo $game_id;
+					print_r($details);
 				
-				if($value == "Destiny"){
+					if(empty($old_game) || $old_game->num_rows == 0)
+						$this->database_connection->insertQuery("insert into games (name,console,has_stats,xbox_title_id,details) values('{$this->database_connection->connection->real_escape_string($key)}','xbox360',0,'{$game_id}','{$this->database_connection->connection->real_escape_string($details)}')");
 					
-					$mysql_connection->insertQuery("insert into games (name,console,has_stats,xbox_title_id) values('{$mysql_connection->connection->real_escape_string($value)}','{$console}',1,{$game_id})");
-				}else{
+			}	
+			
+			foreach($users_games["xbox"]["xboxone"] as $key){
 					
-					$mysql_connection->insertQuery("insert into games (name,console,has_stats,xbox_title_id) values('{$mysql_connection->connection->real_escape_string($value)}','{$console}',0,{$game_id})");
+					$game_id = dechex($xbox_api->getGameId($key,$xuid));
+					$details = serialize($xbox_api->getGameDetails($game_id));
+					$old_game = $this->database_connection->selectQuery("select * from games where name = '{$key}'");
+					if(empty($old_game) || $old_game->num_rows == 0)
+						$this->database_connection->insertQuery("insert into games (name,console,has_stats,xbox_title_id,details) values('{$this->database_connection->connection->real_escape_string($key)}','xboxone',0,'{$game_id}','{$this->database_connection->connection->real_escape_string($details)}')");
 					
+			}
+		}
+		if(!empty($this->psn_tag)){
+			
+			$psn_api = new PsnApi();
+			$profile["ps"]=$psn_api->getGamerProfile(urlencode($this->psn_tag));
+			$psn_games = $psn_api->getAllTheGamersGames($this->psn_tag);
+			
+			$users_games["ps"]["ps3"]=$psn_api->getGamersPs3Games(urlencode($this->psn_tag)); 
+			$users_games["ps"]["ps4"]=$psn_api->getGamersPs4Games(urlencode($this->psn_tag));
+				foreach($psn_games["games"] as $key){
+					
+					$game_id = $key["npcommid"];
+					$details = serialize($psn_api->getGameDetails($game_id));
+					$old_game = $this->database_connection->selectQuery("select * from games where name = '{$key['title']}'");
+					if(empty($old_game) || $old_game->num_rows == 0)
+						$this->database_connection->insertQuery("insert into games (name,console,has_stats,psn_title_id,details) values('{$this->database_connection->connection->real_escape_string($key['title'])}','{$key['platform']}',0,'{$game_id}' , '{$this->database_connection->connection->real_escape_string($details)}')");
+					
+			}	
+		
+	
+		}
+		
+		
+		$params = array("name" =>$this->name , "password"=>$this->password, "xbox_id" =>$this->xbox_tag,"xuid" =>$xuid,"psn_id"=>$this->psn_tag,"games" => serialize($users_games),"email"=>$this->email,"age"=>$this->birthday,"signed_in"=>1,"profile" => serialize($profile));
+		
+		$this->database_connection->insertQuery("insert into gamers ( username , password   , xbox_id , xbox_uid , psn_id ,games,email , birthday,signed_in,profile)values( ?,?,? , ? , ? , ? , ?,?,?,?)",$params);
+		$id = $this->database_connection->selectQuery("select id  from gamers where username ='{$this->name}'")->fetch_row();
+		
+		$this->gamer = new Gamer($id[0],$this->name,$this->xbox_tag,$this->psn_tag);
+	//	session_name("fgs");
+		//	session_start();
+		//if(session_regenerate_id(true)){
+		//	$_SESSION["user"] = null;
+		//	$_SESSION["user"] = serialize($this->gamer);
+		//	$_SESSION["id"] =  array(session_id() => $this->gamer->id);
+			//header("Location:gamer.php?id=${id[0]}");
+			
+		//}else{
+			//do something
+		//}
+		
+		
+	}
+	public function validateBirthday(){
+		
+		if(empty($this->birthday))
+			throw new AddGamerException("A date for your birthday was not specified. Please specify a date for your bithday.");
+		$today = time();
+		$today = getdate($today);
+		$age   = strtotime($birthday);
+		$age   = getdate($age);
+		
+		if(($today["year"] - $age["year"]) < 17){
+			throw new AddGamerException("You must be 18 years of age or older to join the ranks of gamer.");
+		}else{
+			if(($today["year"] - $age["year"]) == 18){
+				if($today["mon"] < $age["mon"])
+					throw new AddGamerException("You must be 18 years of age or older to join the ranks of gamer.");
+				else if($today["mon"] == $age["mon"]){
+					if($today["mday"] < $age["mday"])
+						throw new AddGamerException("You must be 18 years of age or older to join the ranks of gamer.");
 				}
 			}
 		}
-		$r = $r->fetch_assoc();
-		if($r["has_stats"] == 1){
-			$api = strtolower($r["name"]."Api");
-			$api = new $api;
-			$api->addGamer($gamer);
-			$game_rank = 0;
-			$gamer->setGameStats($value,$xbox_api,$api);
+	}
+	public function validateData(){
 			
-		}else{
-			$gamer->setGameStats($value,$xbox_api);
-		}
+		$this->validateBirthday();
+		$this->validateEmail();
+		$this->validatePassword();
+		$this->validateUsername();
+	}
+	public function validateEmail(){
+			$mail == null;	
+			if(empty($this->email) || $this->email == "" )//need to check if email format is right and check for duplicate emails
+				throw new AddGamerException("A valid email was not entered. Please Enter a valid email address.");
+			$mail = new EMail("bennydorlisme@gaming-for-glory.com", $this->email);
+			
+			$mail->sendEmail("Test","This is a test");
 			
 	}
-
-
-	$gamer->games =serialize($gamer->games);
-	$mysql_connection->updateQuery(("update gamers set games = '" . $mysql_connection->connection->real_escape_string($gamer->games) . "' where id = {$gamer->id} "));
-	$gamer->games = unserialize($gamer->games);
 	
+	public function validatePassword(){
+	
+		if(empty($this->password) || $this->password == "" || strlen($this->password) < 8)
+			throw new AddGamerException("Your password must be at least 8 characters long.");
+		$this->password = sha1($this->password);
 	}
-function setPs4Games($mysql_connection,$games,$gamer){
-	$psn_api = new PsnApi($gamer);
-	$console = serialize(array("ps4"));
-	foreach($games["ps"]["ps4"] as $key => $value){
-		$r = $mysql_connection->selectQuery("select * from games where name = '{$value}'");
-		if(empty($r) || $r->num_rows == 0){
-			//print_r($value);
-			$game_id = $psn_api->getGameId($value,$gamer->xuid);
-			if($value == "Destiny")
-				$mysql_connection->insertQuery("insert into games (name,console,has_stats,xbox_title_id) values('{$mysql_connection->connection->real_escape_string($value)}','{$console}',1,{$game_id})");
-			else
-				$mysql_connection->insertQuery("insert into games (name,console,has_stats,xbox_title_id) values('{$mysql_connection->connection->real_escape_string($value)}','{$console}',0,{$game_id})");
-			continue;
+	
+	public function validateUsername(){
+		
+		$params 		= null;
+		$valid_username = null;
+		
+		if(empty($this->name) || $this->name == "" || strlen($this->name) < 2)
+			throw new AddGamerException("An username must be two or more characters long.");
+		
+		$params = array($this->name);
+		$valid_username = $this->database_connection->selectQuery("select username from gamers where username = ?" ,$params);
+		if($valid_username){
+			if(!empty($valid_username))
+				throw new AddGamerException("Invalid Username. The specified username is already being used. Please enter a different username.");	
 		}
-		$r = $r->fetch_assoc();
-		if($r["has_stats"] == 1){
-			$api = strtolower($r["name"]."Api");
-			$api = new $api;
-			$api->addGamer($gamer);
-			$game_rank = 0;
-			$gamer->setGameStats($value,$psn_api,$api);
-		}else
-			continue;
 	}
-	$mysql_connection->updateQuery(("update gamers set games = '" . $mysql_connection->connection->real_escape_string($gamer->games) . "' where id = {$gamer->id} "));
-}
+	public function validatePsnUsername(){
+		
+		if($this->psn_tag == "" || str_len($this->psn_tag) < 2 || !isset($this->psn_tag))
+			throw new AddGamerException("An invalid PSN username was entered. Please enter a valid PSN username.");
+		if(!PsnApi::isGamerTagValid($psn_usernmae))
+			throw new AddGamerException("An invalid PSN username was entered. Please enter a valid PSN username.");
+	}
+	public function validateXboxLiveUsername(){
+		
+		$valid_name = $this->database_connection->selectQuery("select * from gamers where xbox_id ='{$this->xbox_tag}'");
+		
+			if($this->xbox_tag == "" || str_len($this->xbox_tag) < 2 || !isset($this->xbox_tag) || $valid_name)
+				 throw new AddGamerException("An invalid Xbox Live username was entered. Please enter a valid Xbox Live username.");
+		if(!XboxApi::isGamerTagValid($this->xbox_tag))
+			throw new AddGamerException("An invalid Xbox Live username was entered. Please enter a valid Xbox Live username.");
+	}
+	
+	
+	
+};//end of class ///////////////
+
+
 if($_SERVER["REQUEST_METHOD"] == "POST"){
 	
  $mysql_connection = null;
- $gamer            = null;
- $name             = null;
- $password         = null;
- $email            = null;
- $birthday         = null;
- $xbox_tag         = null;
- $psn_tag          = null;        
- $signed_in        = null;
- $rank             = null;
- $xbox_api         = null;
- $psn_api          = null;
-
  $name     = htmlentities($_POST["gamer_name"]);
+ 
  $password = $_POST["gamer_password"];
  $email    = htmlentities($_POST["gamer_email"]);
  $birthday = $_POST["gamer_age"];
  $xbox_tag    = htmlentities($_POST["gamer_xbox_id"]);
  $psn_tag = htmlentities($_POST["gamer_psn_id"]);
- $signed_in = 1;
-$mysql_connection = new FantasyGamingDataBase();
-  try{
  
-  	if(empty($name) || $name == '')
-		throw new AddGamerException("Invalid Username");
-	else{
-		$params = array($name);
-		$valid_username = $mysql_connection->selectQuery("select * from gamers where username = ?" ,$params);
-		
-		if(!empty($valid_username))
-			throw new AddGamerException("Invalid Username. That name has already been taken. Please enter a different name.");	
-	}
-	if(empty($password) || $password == '' || strlen($password) < 8)
-		throw new AddGamerException("Invalid Password. Passwords must contain at least 8 characters");
-	if(empty($email) || $email == '')
-		throw new AddGamerException("Invalid email");
-	else{
-		$params = array($email);
-		$valid_email = $mysql_connection->selectQuery("select * from gamers where email = ?" ,$params);
-		if(empty($valid_email)){
-			$valid_email = $mysql_connection->selectQuery("select * from managers where email = ?",$params);
-			if(!empty($valid_email)){
-				throw new AddGamerException("Invalid email. That email address is already being used.");
-			}
-		}else
-			throw new AddGamerException("Invalid email. That email address is already being used. ");
-	}
-	if(empty($birthday))
-		throw new AddGamerException("Invalid Birthday");
-	$today = time();
-	$today = getdate($today);
-	$age   = strtotime($birthday);
-	$age = getdate($age);
+  try{
 	
-	if(($today["year"] - $age["year"]) < 17){
-		throw new AddGamerException("You must be 18 years of age or older to join the ranks of gamer.");
-	}else{
-		if(($today["year"] - $age["year"]) == 18){
-			if($today["mon"] < $age["mon"])
-				throw new AddGamerException("ggYou must be 18 years of age or older to join the ranks of gamer.");
-			else if($today["mon"] == $age["mon"]){
-				if($today["mday"] < $age["mday"])
-					throw new AddGamerException("You must be 18 years of age or older to join the ranks of gamer.");
-			}
-		}
-	}
-	
-
-	 $password = sha1(htmlentities($_POST["gamer_password"]));
-	 if(!empty($xbox_tag) && $xbox_tag != ''){
-	 	if(!empty($psn_tag) && $psn_tag != ''){
-	 		
-	 		$valid_xbox_id = XboxApi::isGamerTagValid($xbox_tag);
-			$valid_psn_id = PsnApi::isGamerTagValid($psn_tag);
-			if( $valid_xbox_id  == true && $valid_psn_id  == true ){
+	$addgamer = new AddGamer($name,$email,$password,$birthday,$xbox_tag,$psn_tag);
+	$addgamer->validateData();
+	$addgamer->setGamerData();
 				
-				// $mysql_connection->insertQuery("insert into gamers (username , password   , email,birthday,xbox_id , psn_id ,signed_in)values( ? , ? , ? , ? , ?,?,?)",$params);
-			     $params = array("name" =>$name , "password"=>$password, "xbox_id" =>$xbox_tag,"psn_id"=>$psn_tag,"email"=>$email,"age"=>$birthday,"signed_in"=>$signed_in);
-				 $mysql_connection->insertQuery("insert into gamers (username , password   , xbox_id , psn_id ,email , birthday,signed_in)values( ? , ? , ? , ? , ?,?,?)",$params);
-				 
+				 /*
 				 $params = array("email"=>$email);	
 				$result = $mysql_connection->selectQuery("select * from gamers where email = ?",$params);
 				if(empty($result))
@@ -190,9 +248,9 @@ $mysql_connection = new FantasyGamingDataBase();
 				$xuid = $xbox_api->getGamerUserId($xbox_tag);
 				$gamer->xuid = $xuid;
 				$mysql_connection->updateQuery("update gamers set xbox_uid = {$xuid} where id = {$gamer->id}");
-				$games = array("xbox"=> array( "xboxone" => $xbox_api->getGamerXboxOneGames($xuid), "xbox360" => $xbox_api->getGamer360Games($xuid)) , /*"ps" => array("ps4" => $psn_api->getGamersPs4Games($psn_tag) , "ps3" => $psn_api->getGamersPs3Games($psn_tag))*/ );
+				$games = array("xbox"=> array( "xboxone" => $xbox_api->getGamerXboxOneGames($xuid), "xbox360" => $xbox_api->getGamer360Games($xuid)) , "ps" => array("ps4" => $psn_api->getGamersPs4Games($psn_tag) , "ps3" => $psn_api->getGamersPs3Games($psn_tag)) );
 				setXboxOneGames($mysql_connection, $games, $gamer,$xbox_api);
-				//setPs4Games($mysql_connection, $games, $gamer);
+				setPs4Games($mysql_connection, $games, $gamer);
 				$xbox_profile = $xbox_api->getGamerProfile($gamer->xuid);
 				$xbox_gamer_card = $xbox_api->getGamerCard($gamer->xuid);
 				$psn_profile = $psn_api->getGamerProfile($gamer->psn_id);
@@ -200,76 +258,14 @@ $mysql_connection = new FantasyGamingDataBase();
 				$gamer->profiles["xbox"] = $xbox_profile;
 				$xbox_pics = array("avatar"=>$xbox_gamer_card["avatarBodyImagePath"],"small" => $xbox_gamer_card["gamerpicSmallSslImagePath"], "large" => $xbox_gamer_card["gamerpicLargeSslImagePath"], "profile" => $xbox_profile["GameDisplayPicRaw"]);
 				$xbox_pics = serialize($xbox_pics);
-				//$gamer->profiles["psn"] = $psn_profile;
+				$gamer->profiles["psn"] = $psn_profile;
 				$xbox_profile = serialize($xbox_profile);
 				$mysql_connection->updateQuery("update gamers set xbox_pics = '{$xbox_pics}' where id = {$gamer->id}" );
-				//$mysql_connection->updateQuery("update gamers set psn_pics = {$psn_pics} where id = {$id}" );
+				$mysql_connection->updateQuery("update gamers set psn_pics = {$psn_pics} where id = {$id}" );
 				$mysql_connection->updateQuery("update gamers set xbox_profile = '{$xbox_profile}' where id = {$gamer->id}" );		
-}else if($valid_xbox_id == false || $valid_psn_id == false){
-			
-			if($valid_xbox_id == false && $valid_psn_id == false)
-				throw new AddGamerException("No Valid Game Ids Entered");
-			else if($valid_xbox_id == true && $valid_psn_id == false)
-				throw new AddGamerException("Invalid PSN ID");
-			else if($valid_xbox_id == false && $valid_psn_id == true)
-				throw new AddGamerException("Invalid Xbox ID");
-		} 
-	 	}else{
-	 		$psn_tag = '';
-					$valid_xbox_id = XboxApi::isGamerTagValid($xbox_tag);
-					
-			if( $valid_xbox_id == true){
-				$params = array("name" =>$name , "password"=>$password, "xbox_id" =>$xbox_tag,"psn_id"=>$psn_tag,"email"=>$email,"age"=>$birthday,"signed_in"=>$signed_in);
-				$mysql_connection->insertQuery("insert into gamers (username , password   , xbox_id , psn_id ,email , birthday,signed_in) values( ? , ? , ? , ? , ?,?,?)",$params);
-				 $params = array("email"=>$email);	
-				 $result = $mysql_connection->selectQuery("select * from gamers where email = ?",$params);		
-				 if(empty($result))
-					throw new AddGamerException("An Database error occurred");
-				 $id = $result["id"];
-				 $gamer = new Gamer($id , $name , $xbox_tag , $psn_tag);
-				 $xbox_api = new XboxApi($gamer);
-				 $xuid = $xbox_api->getGamerUserId($xbox_tag);
-				 $gamer->xuid = $xuid;
-				 $mysql_connection->updateQuery("update gamers set xbox_uid = {$xuid} where id = {$gamer->id}");
-				 $games = array("xbox"=> array("xboxone" => $xbox_api->getGamerXboxOneGames($xuid), "xbox360" => $xbox_api->getGamer360Games($xuid)) , "ps" => array() );
-			  	 setXboxOneGames($mysql_connection, $games, $gamer,$xbox_api);
-	 			 $xbox_profile = $xbox_api->getGamerProfile($gamer->xuid);
-				 $xbox_gamer_card = $xbox_api->getGamerCard($gamer->xuid);
-				 $xbox_activity = $xbox_api->getGamerActivity($gamer->xuid);
-			
-				$gamer->profiles["xbox"] = $xbox_profile;
-				$xbox_pics = array("avatar"=>$xbox_gamer_card["avatarBodyImagePath"],"small" => $xbox_gamer_card["gamerpicSmallSslImagePath"], "large" => $xbox_gamer_card["gamerpicLargeSslImagePath"], "profile" => $xbox_profile["GameDisplayPicRaw"]);
-				$xbox_pics = serialize($xbox_pics);
-				$xbox_profile = serialize($xbox_profile);
-				$mysql_connection->updateQuery("update gamers set xbox_pics = '{$xbox_pics}' where id = {$gamer->id}" );
-				$mysql_connection->updateQuery("update gamers set xbox_profile = '{$xbox_profile}' where id = {$gamer->id}" );
-			
-			}else{
-	 		
-	 		   throw new AddGamerException("Invalid Xbox Live ID");
-	 	}
-		
-		}
-		}else if(isset($psn_tag) && $psn_tag != ''){
-		$xbox_tag = '';
-		
-			$valid_psn_id = PsnApi::isGamerTagValid($psn_tag);
-			if( $valid_psn_id  == true ){
-				$params = array("name" =>$name , "password"=>$password, "xbox_id" =>$xbox_tag,"psn_id"=>$psn_tag,"email"=>$email,"age"=>$birthday,"signed_in"=>$signed_in);
-				$mysql_connection->insertQuery("insert into gamers (username , password   , xbox_id , psn_id ,email , birthday,signed_in)values( ? , ? , ? , ? , ?,?,?)",$params);
-				$params = array("email"=>$email);
-			   $result = $mysql_connection->selectQuery("select * from gamers where email = ?",$params);
-				$id = $result["id"];
-				$gamer = new Gamer($id , $name , $xbox_tag , $psn_tag);
-				$psn_api = new PsnApi($gamer);
-				$games = array("xbox"=> array() , "ps" => array("ps4" => $psn_api->getGamersPs4Games($psn_tag) , "ps3" => $psn_api->getGamersPs3Games($psn_tag)) );
-				//setPs4Games($mysql_connection, $games, $gamer);
-		 		}else{
-		 			throw new AddGamerException("Invaild PSN ID");
-		 		}
-	}else{
-		throw new AddGamerException("No Valid Gamer IDs Entered! ");
-	}
+
+				  * 
+				  */
 }catch(Exception $ex){
  
 	     if($id != null){
@@ -307,15 +303,10 @@ $mysql_connection = new FantasyGamingDataBase();
 }
 
 
-$mysql_connection->close();
-session_name("fgs");
-session_start();
 
-$_SESSION['user'] = serialize($gamer);
-$_SESSION['id'] =  array(session_id() => $id);
-header("Location:gamer.php?id=".$gamer->id );
  }else{
  	header("Location:404.php");
+ 	exit;
  }
 
 ?>

@@ -209,12 +209,12 @@ $this->header .="</head>
 											<ul id='page_header_ps4_menu'>
 												<li>
 													<a href='' id='page_header_ps4_gamers'>
-														Gamers
+														Games
 													</a>
 												</li>
 												<li>
 													<a href='' id='page_header_ps4_leagues'>
-														Leagues
+														Grinders
 													</a>
 												</li>
 												<li>
@@ -232,12 +232,12 @@ $this->header .="</head>
 												<ul id='page_header_ps3_menu'>
 													<li>
 														<a href='' id='page_header_ps3_gamers'>
-															Gamers
+															Games
 														</a>
 													</li>
 													<li>
 														<a href='' id='page_header_ps3_leagues'>
-															Leagues
+															Grinders
 														</a>
 													</li>
 													<li>
@@ -261,12 +261,12 @@ $this->header .="</head>
 											<ul id='page_header_xboxone_menu'>
 												<li>
 														<a href='' id='page_header_xboxone_gamers'>
-															Gamers
+															Games
 														</a>
 													</li>
 													<li>
 														<a href='' id='page_header_xboxone_leagues'>
-															Leagues
+															Grinders
 														</a>
 													</li>
 													<li>
@@ -283,12 +283,12 @@ $this->header .="</head>
 											<ul id='page_header_xbox360_menu'>
 												<li>
 														<a href='' id='page_header_xbox360_gamers'>
-															Gamers
+															Games
 														</a>
 													</li>
 													<li>
 														<a href='' id='page_header_xbox360_leagues'>
-															Leagues
+															Grinders
 														</a>
 													</li>
 													<li>
@@ -307,35 +307,7 @@ $this->header .="</head>
 						</nav>
 						<nav class='module' id='page_header_main_nav_module'>
 							<ul id='page_header_main_nav_list'>
-								<li>
-									<a href='' id='page_header_observe'>
-										Observe
-									</a>
-									<ul id='page_header_observe_menu'>
-										<li>
-											<a href='' id='page_header_observe_menu_gameglory'>
-												GameGlory
-											</a>
-										</li>
-										<li>
-											<a href='' id='page_header_observe_menu_twitch'>
-												Twitch
-											</a>
-										</li>
-										<li>
-											<a href='' id='page_header_observe_menu_youtube'>
-												YouTube
-											</a>
-										</li>
-										<li>
-											<a href='' id='page_header_observe_menu_recent_videos'> 
-												Recent Videos
-											</a>
-										</li>
-									</ul>
-								</li>
-								
-								<li>
+							<li>
 									<a href='' id='page_header_glory'>
 										Glory
 									</a>
@@ -362,6 +334,35 @@ $this->header .="</head>
 										</li>
 									</ul>
 								</li>
+								<li>
+									<a href='' id='page_header_observe'>
+										Videos
+									</a>
+									<ul id='page_header_observe_menu'>
+										<li>
+											<a href='' id='page_header_observe_menu_gameglory'>
+												GameGlory
+											</a>
+										</li>
+										<li>
+											<a href='' id='page_header_observe_menu_twitch'>
+												Twitch
+											</a>
+										</li>
+										<li>
+											<a href='' id='page_header_observe_menu_youtube'>
+												YouTube
+											</a>
+										</li>
+										<li>
+											<a href='' id='page_header_observe_menu_recent_videos'> 
+												Recently Uploaded
+											</a>
+										</li>
+									</ul>
+								</li>
+								
+								
 							
 						";
 			   
@@ -375,9 +376,14 @@ $this->header .="</head>
 							             	<fieldset>
 								            	<input type='text' name='email' class='text_box' id='home_page_login_username_text_box' placeholder='Enter your email address'/>
 							            		<input type='password' name='password' class='text_box' id='home_page_login_password_text_box' placeholder='Enter your password'/>
-								 	          <input type='submit' class='submit_button' id='home_page_login_submit_button' value='login' /> 
-								            </fieldset>	
+								 	            <input type='submit' class='submit_button' id='home_page_login_submit_button' value='login' /> 
+								           	   <div id='page_header_login_exit_button'>
+							      				
+							            		</div>
+										    </fieldset>	
+										    
 							            </form>
+							           
 							            </li>
 							            ";
 				     }else{

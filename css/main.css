@@ -7,7 +7,7 @@ html {
 	
 	body {
 		
-		background-color:#E6E6E0;
+		background-color:#FFFFFF;
 	    color:black;
 	    margin:0px;
 		border: 0px;
@@ -22,7 +22,8 @@ html {
 		height:10%;
 		z-index:50;
 		position:relative;
-		box-shadow: 0px 5px 5px black;
+		box-shadow: 0px 2px 1px 1px #006400;
+		
 		font-family : BentonSans, Arial, Helvetica, sans-serif;
 		
 	}
@@ -30,6 +31,7 @@ html {
 		
 		width:100%;
 		background-color:#003087;
+		/*background-color:#006400;
 		/*background-color:#d1d1d1;*/
 		height:50%;
 		margin:0px;
@@ -64,6 +66,18 @@ html {
 	.header_of_page_header li{
 		list-style: none;
 		
+	}
+	#page_header_login_exit_button{
+		border-left   : solid 1px grey;
+		border-bottom : solid 1px grey;
+		background-image:url('/img/main/back-x.svg');
+		background-size:contain;
+		background-repeat:no-repeat;
+		width:4%;
+		height:15px;
+		float : right;
+		display:inline-block;
+		margin: 0px;
 	}
 	.header_of_page_header a{
 		text-decoration:none;
@@ -398,14 +412,13 @@ html {
 	}
 	.page_body{
 		height:90%;
-		background-color:#FFFFFF;
+		/*background-color:#E6E6E0 green = background-color:#50C21C;*/
+		background-color:#E6E6E0;
 		color:#000000;
 		margin:0px auto;
 		width:70%;
-		z-index:0;
 		position:relative;
-		overflow-y:scroll;
-		box-shadow: -3px 0px 5px black , 3px 0px 5px black;
+		
 	}
 	
 	.page_body_header{
@@ -427,7 +440,7 @@ html {
 	.module_container{
 	
 	display : inline-block;
-	margin:5%;
+	margin:0.1%;
 	
 	}
 	.module{
@@ -465,15 +478,18 @@ html {
 		
 	}
 	.table_data_row:nth-child(2n){
-		background:linear-gradient(180deg,#00B000,#006400);
+		background:linear-gradient(180deg,rgba(0,176,0,1),rgba(0,100,0,1));
 		color:#000000;
 		text-align: center;
+	
+		
 		
 	}
 	.table_data_row:nth-child(2n-1){
 	
-		background:linear-gradient(180deg,#0072CE,#003087);
+		background:linear-gradient(180deg,rgba(0,114,206,1),rgba(0,48,135,1));
 		color:#FFFFFF;
+		
 		text-align: center;
 		
 	}

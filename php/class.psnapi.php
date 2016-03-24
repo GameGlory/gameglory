@@ -59,12 +59,30 @@
 				print_r($ex);
 			}
 		}
+		public function getGameDetails($npcommid){
+				$games = null;
+			try{
+				$game_details = psnGetGame($npcommid);
+				if($game_details["success"] == 0){
+					if($game_details["error_message"])
+						throw new PsnException($game_details["error_message"]);
+					else
+						throw new PsnException($games . "\nThe PSN API came back with some fucked up data... I don't know what this shit is.");
+				}else if($game_details["success"] == 1)
+					return $game_details;
+				else
+					throw new PsnException("The PSN API came back with some fucked up data... I don't know what this shit is.");
+				
+			}catch(Exception $ex){
+				print_r($ex);
+			}
+		}
 		public function getGamersPs3Games($psn_id){
 				
 			$all_games = null;
 			$ps3_games = null;
 			try{
-			$games = PsnApi::getAllTheGamersGames($psn_id);
+			$games = $this->getAllTheGamersGames($psn_id);
 			$ps3_games = array();
 			foreach($games["games"] as $key){
 				foreach($key as $k => $value){
@@ -84,7 +102,7 @@
 			$level = null;
 			$profile = null;
 			try{
-				if($profile = PsnApi::getGamerProfile($psn_id)){
+				if($profile = $this->getGamerProfile($psn_id)){
 					$level = $profile->offsetGet("real_level");
 					return $level;	
 				}else
@@ -98,7 +116,7 @@
 			$points = null;
 			$profile = null;
 			try{
-				if($profile = PsnApi::getGamerProfile($psn_id)){
+				if($profile = $this->getGamerProfile($psn_id)){
 					$points = $profile->offsetGet("real_points");
 					return $points;	
 				}else
@@ -198,6 +216,13 @@
 				print_r($ex);
 			}
 		}
+		 public function getRecentlyPlayedGames($psn_id){
+		 	
+			$games = $this->getAllTheGamersGames($psn_id);
+			foreach ($games as $key => $value) {
+				print_r($value);
+			}
+		 }
 		static public function isGamerTagValid($psn_id){
 			
 			$response = null;
