@@ -5,6 +5,8 @@ jQuery(document).ready(function(){
 			displayGamers();
 		else if(window.location.hash == "#managers")
 			displayManagers();
+		else if(window.location.hash == "#games")
+			displayGames();
 		else
 			window.location.hash = "";
 	}
@@ -28,15 +30,26 @@ jQuery(document).ready(function(){
 		displayManagers();
 		
 	});
+	jQuery("#page_header_footer_games").on("click",function(){
+		
+		displayGames();
+		
+	});
+	jQuery("#user_search_games_catagory a").on("click",function(){
+		
+		displayGames();
+		
+	});
 });
 function displayGamers(){
 
-	if(jQuery("#gamer_search_module_container") && jQuery("#manager_search_module_container")){
+	if(jQuery("#gamer_search_module_container") && jQuery("#manager_search_module_container") && jQuery("#games_search_module_container")){
 			
-			if(jQuery("#manager_search_module_container").css("display") == "block" && jQuery("#gamer_search_module_container").css("display") == "none" ){
+			if(jQuery("#manager_search_module_container").css("visibility") == "visible" && jQuery("#games_search_module_container").css("visibility") == "hidden" && jQuery("#gamer_search_module_container").css("visibility") == "hidden" || jQuery("#manager_search_module_container").css("visibility") == "hidden" && jQuery("#games_search_module_container").css("visibility") == "visible" && jQuery("#gamer_search_module_container").css("visibility") == "hidden"  ){
 				
-				jQuery("#manager_search_module_container").css("display","none");
-				jQuery("#gamer_search_module_container").css("display","block");
+				jQuery("#manager_search_module_container").css("visibility","hidden");
+				jQuery("#games_search_module_container").css("visibility","hidden");
+				jQuery("#gamer_search_module_container").css("visibility","visible");
 			}else{
 			return;
 			}
@@ -46,12 +59,30 @@ function displayGamers(){
 		}
 }
 function displayManagers(){
-	if(jQuery("#gamer_search_module_container") && jQuery("#manager_search_module_container")){
+	if(jQuery("#gamer_search_module_container") && jQuery("#manager_search_module_container") && jQuery("#games_search_module_container")){
 			
-			if(jQuery("#gamer_search_module_container").css("display") == "block" && jQuery("#manager_search_module_container").css("display") == "none" ){
+			if(jQuery("#manager_search_module_container").css("visibility") == "hidden" && jQuery("#games_search_module_container").css("visibility") == "hidden" && jQuery("#gamer_search_module_container").css("visibility") == "visible" || jQuery("#manager_search_module_container").css("visibility") == "hidden" && jQuery("#games_search_module_container").css("visibility") == "visible" && jQuery("#gamer_search_module_container").css("visibility") == "hidden"  ){
 				
-				jQuery("#gamer_search_module_container").css("display","none");
-				jQuery("#manager_search_module_container").css("display","block");
+				jQuery("#games_search_module_container").css("visibility","hidden");
+				jQuery("#gamer_search_module_container").css("visibility","hidden");
+				jQuery("#manager_search_module_container").css("visibility","visible");
+			}else{
+			return;
+			}
+		}else{
+			//have to throw error here
+			return;
+		}
+}
+function displayGames(){
+
+	if(jQuery("#gamer_search_module_container") && jQuery("#manager_search_module_container") && jQuery("#games_search_module_container")){
+			
+			if(jQuery("#manager_search_module_container").css("visibility") == "hidden" && jQuery("#games_search_module_container").css("visibility") == "hidden" && jQuery("#gamer_search_module_container").css("visibility") == "visible" || jQuery("#manager_search_module_container").css("visibility") == "visible" && jQuery("#games_search_module_container").css("visibility") == "hidden" && jQuery("#gamer_search_module_container").css("visibility") == "hidden"  ){
+				
+				jQuery("#games_search_module_container").css("visibility","visible");
+				jQuery("#gamer_search_module_container").css("visibility","hidden");
+				jQuery("#manager_search_module_container").css("visibility","hidden");
 			}else{
 			return;
 			}

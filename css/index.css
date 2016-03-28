@@ -15,10 +15,31 @@
 }
 #top_ten_module_container tr {
 	height:35px;
+	padding:0px;
 }
 #top_ten_module_container td {
 	font-size:80%;
 }
+.table_data a{
+	text-decoration: none;
+	color:inherit;
+}
+#small_xbox_pic{
+	
+	padding:0px;
+	border:0px;
+	margin:0px;	
+	
+}
+	#small_ps_pic{
+		width:25%;
+		height:15%;
+		padding:0px;
+	border:0px;
+	margin:0px;	
+	
+	
+	}
 #homepage_signup_module_container{
 width: 30%;
 

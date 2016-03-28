@@ -38,8 +38,23 @@
 	color:white;
 }
 #gamer_search_module_container{
-	display:block;
+	position:absolute;
+	visibility: visible;
+	
 }
 #manager_search_module_container{
-	display:none;
+	position:absolute;
+	visibility: hidden;
+}
+#games_search_module_container{
+	position:absolute;
+	visibility: hidden;
+	
+}
+#games_search_module_body table tbody td {
+	
+	font-size:0.7em;
+}
+.table_data_row{
+	height:34px;;
 }

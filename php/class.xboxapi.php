@@ -600,7 +600,7 @@ require_once("class.fantasygamingdatabase.php");
 										foreach ($value as $k => $v) {
 											if($k == "name"){
 												if(iconv("UTF-8", "ASCII//IGNORE",$value[$k]) == $game){
-													$game_id = $value["titleId"];
+													$game_id = $value["TitleId"];
 												
 												}
 											}else
@@ -610,13 +610,14 @@ require_once("class.fantasygamingdatabase.php");
 										continue;
 								}
 								
-								if(!isset($game_id)){
+								if(!isset($game_id) || empty($game_id)){
 									curl_close($url);
 									throw new XboxApiException("WTF!");
 								}
 								else{
+								
 									curl_close($url);
-									return $game_id;
+									return dechex($game_id);
 								}
 							}
 			}else{
@@ -655,19 +656,12 @@ require_once("class.fantasygamingdatabase.php");
 							$game_details["publishername"] = $response["Items"]["0"]["PublisherName"];
 							$game_details["developername"] = $response["Items"]["0"]["DeveloperName"];
 							$game_details["releasedate"] = $response["Items"]["0"]["ReleaseDate"];
-							
+						
 							foreach ($response["Items"]["0"]["Genres"] as $key => $value){
-								if(strpos($value["Name"],"&")){
-									$genre = split("/&/", $value["Name"]);
-									foreach($genre as $k => $v){
-											array_push($game_details["genres"], $v);	
-										}
-								}else{
-									
-									array_push($game_details["genres"],$value["Name"] );	
-								}
 							
-								
+									array_push($game_details["genres"],$value["Name"] );	
+							
+							
 							}
 								//print_r($game_details);
 								//echo("<br>");

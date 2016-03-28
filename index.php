@@ -47,6 +47,8 @@ class HomePage extends Page{
                   		<table>
                   			<tbody>
                   			<tr class='table_header' id='top_ten_module_table_header'>
+                  			<th>
+                  			</th>
 	                  			<th>
 	                  				Username
 	                  			</th>
@@ -68,40 +70,41 @@ class HomePage extends Page{
                   			
                   			
 	                  		foreach ($result as $key ) {
-								 		$xbox_pics = json_decode($key["xbox_pics"]);
-								 		$psn_pics = unserialize($key["psn_pics"]);
-								 	
-								 if(!empty($xbox_pics) && !empty($psn_pics)){
+								 		$profile = unserialize($key["profile"]);
+						 	
+								
+								 if(!empty($profile['xbox']['gamercard']['gamerpicSmallImagePath']) && !empty($profile['ps']["avatar"])){
 								 $this->body .="<tr class='table_data_row' id='top_ten_module_table_data'>
 								 	<td class='table_data'>
-								 		<a href='php/gamer.php?id={$key['id']} '>
-								 			{$key['username']}
-										</a>
-								 	  <img src='{$xbox_pics['small']}'/>
-								 	 <!-- <img src='{$psn_pics['small']}'/> !-->
+								 		
+								 		<img src='{$profile['xbox']['gamercard']['gamerpicSmallImagePath']}' id='small_xbox_pic'/>
+								 	<img src='{$profile['ps']['avatar']}' id='small_ps_pic'/> 
+								 		
+								 	  
 								 	</td>";
-								 }else if(!empty($xbox_pics)){
+								 }else if(!empty($profile['xbox']['gamercard']['gamerpicSmallImagePath'])){
 								 	 $this->body .="<tr class='table_data_row' id='top_ten_module_table_data'>
 								 	<td class='table_data'>
-								 	<img src='{$xbox_pics->small}'/>
-								 		<a href='php/gamer.php?id={$key['id']} '>
-								 		{$key['username']}
-										</a>
+								 	<img src='{$profile['xbox']['gamercard']['gamerpicSmallImagePath']}' id='small_xbox_pic'/>
+								 		
 								 	  
 								 	</td>";
 								 }else{
 								 	 $this->body .="<tr class='table_data_row' id='top_ten_module_table_data'>
 								 	<td class='table_data'>
-								 	<!-- <img src='{$psn_pics['small']}'/> !-->
-								 		<a href='php/gamer.php?id={$key['id']} '>
-								 		{$key['username']}
-								 		</a>
+								 	<img src='{$profile['ps']['avatar']}' id='small_ps_pic'/>
+					
 								 	 
 								 	</td>";
 								
 								 }
 									
 								 	$this->body .="
+								 	<td class='table_data'>
+								 	<a href='php/gamer.php?id={$key['id']} '>
+								 		{$key['username']}
+								 		</a>
+								 		</td>
 									<td class='table_data'>
 									{$key['xbox_id']}
 									</td>
@@ -196,6 +199,7 @@ try{
 	setUser();	
 	$page = new HomePage($user);
 
+	
 
 
 }catch(Exception $ex){

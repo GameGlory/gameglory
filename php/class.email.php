@@ -20,12 +20,14 @@ $mail->IsSMTP();                                      // Set mailer to use SMTP
 $mail->Host = 'smtp.gmail.com';  // Specify main and backup server
 $mail->SMTPAuth = true;                               // Enable SMTP authentication
 $mail->Port = 587;
-$mail->Username = 'bennydorlisme@gaming-for-glory.com';                            // SMTP username
-$mail->Password = 'Rakande101';                           // SMTP password
+$mail->Username = 'yasmindorlisme@gmail.com';                            // SMTP username
+$mail->Password = 'Rakande101'; 
+//$mail->Username = 'bennydorlisme@gaming-for-glory.com';                            // SMTP username
+//$mail->Password = 'Rakande101';                           // SMTP password
 $mail->SMTPSecure = 'tls';                            // Enable encryption, 'ssl' also accepted
 
 $mail->From = $this->sender;
-$mail->FromName = 'GameGlory';
+$mail->FromName = 'Google';
 $mail->AddAddress($this->receiver);  // Add a recipient
 //$mail->AddAddress('ellen@example.com');               // Name is optional
 //$mail->AddReplyTo('info@example.com', 'Information');
@@ -49,3 +51,6 @@ if(!$mail->Send()) {
 }
 }
 ?>
+
+
+

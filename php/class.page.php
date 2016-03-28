@@ -198,7 +198,7 @@ $this->header .="</head>
 						<nav class='module' id='page_header_console_nav_module'>
 							<ul id='page_header_console_list'>
 								<li>
-									<a href='/php/gamesearch.php?search_for=sony' id='page_header_sony_consoles'>
+									<a href='/php/usersearch.php?search_for=sony' id='page_header_sony_consoles'>
 										Sony
 									</a>
 									<ul id='page_header_sony_console_list'>

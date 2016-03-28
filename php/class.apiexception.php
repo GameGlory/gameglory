@@ -1,7 +1,9 @@
 <?php
-	class ApiException extends Exception{
-		
-			public function goToPreviousPage(){
+class ApiException extends Exception{
+	
+	
+	
+	public function goToPreviousPage(){
 			 if(session_status() == PHP_SESSION_ACTIVE){
 	     
 	     		$_SESSION["error"] = $this->getMessage();
@@ -11,8 +13,7 @@
 				header("location:/{$_SESSION['previous_page']}");
 			else
 				header("location:{$_SESSION['previous_page']}");
-			
-	}else{
+		}else{
 	  session_name("fgs");
 	  session_start();
 	  	if(isset($_SESSION["current_page"])){
@@ -27,5 +28,6 @@
 		}
 		
 	}
-	}
+	
+}//end of class
 ?>
