@@ -7,6 +7,8 @@
 	class PsnApi extends BaseConsoleApi{
 		
 		public function __construct($gamer=null){
+			
+	
 			if($gamer != null){
 			if($gamer instanceof Gamer){
 			  		$this->url_root = null;

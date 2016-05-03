@@ -7,6 +7,7 @@ require_once("php/class.manager.php");
 require_once("php/class.error.php");
 require_once("php/class.destinyapi.php");
 require_once("php/functions.php");
+require_once("Gumer/PSN/Http/Connection.php");
 
 class HomePage extends Page{
 		
@@ -198,9 +199,28 @@ try{
 	
 	setUser();	
 	$page = new HomePage($user);
+		// Setup the connections and instances.
 
+$connection = new Connection;
+
+$provider   = new Gumer\PSN\Authentication\UserProvider($connection);
+$auth       = Gumer\PSN\Authentication\Manager::instance($provider);
+
+// Attempt to login.
+$auth->attempt('blonko100', 'Rakande101!');
+
+
+// Get the current user profile.
+$request    = new Gumer\PSN\Requests\GetMyInfoRequest;
+$response   = $connection->call($request);
+$info       = json_decode($response->getBody(true), true);
+
+// Get the friends list for the current 
+$request    = new Gumer\PSN\Requests\TrophyDataRequest;
+$request->setUserId($info['onlineId']);
+$response   = $connection->call($request);
 	
-
+print_r($response);
 
 }catch(Exception $ex){
 	print_r($ex);

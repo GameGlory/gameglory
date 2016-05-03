@@ -12,9 +12,10 @@ Ajax = {
 				request.onreadystatechange = function(){
 					
 					if(request.readyState == 4 && request.status == 200){
+					
+							jQuery(element).html(request.responseText);
+							//request.responseText;
 						
-						jQuery(element).html(request.responseText);
-						console.log(request.responseText);
 					}
 					
 				};

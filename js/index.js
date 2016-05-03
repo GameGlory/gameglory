@@ -38,7 +38,7 @@ var SignUpForm = {
 				gamer_age : $("#gamer_signup_popup_form_birthday_box").prop("value"),
 				gamer_xbox_id : $("#gamer_signup_popup_form_xbox_tag_box").prop("value"),
 				gamer_psn_id : $("#gamer_signup_popup_form_psn_tag_box").prop("value")
-				},function(data){console.log(data);/*what to do when request comes back*/});
+				},function(data){jQuery(".page_body_header").append(data);/*what to do when request comes back*/});
 		});
 	}
 

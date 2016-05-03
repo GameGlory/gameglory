@@ -4,7 +4,7 @@
 	 private $user = "root";
 	 private $password = "";
 	 private $db = "fantasy_gaming";
-	 protected $connection = null;
+	 public $connection = null;
 	 
 	 public function __construct(){
 	 

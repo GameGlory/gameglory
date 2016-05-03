@@ -38,11 +38,11 @@ require_once("class.fantasygamingdatabase.php");
 					return false;
 				}else{
 					curl_close($url);
-					throw new XboxApiException($response["error_message"]);
+					throw new XboxApiException($response["error_message"],1);
 				}
 			}else if(empty($response)){
 				curl_close($url);
-				throw new XboxApiException("No data returned from xbox");
+				throw new XboxApiException("No data returned from xbox",1);
 			}else{
 				$mysql_connection = new FantasyGamingDataBase();
 				$params = array($gamer_tag);
@@ -59,8 +59,21 @@ require_once("class.fantasygamingdatabase.php");
 				$mysql_connection->close();
 			}
 			}catch(Exception $ex){
-	    		$ex->goToPreviousPage();
-		exit;
+	    		
+				if($ex->getCode()){
+					$url = curl_init(XboxApi::URL_ROOT . "/v2/xuid/{$tag}");
+					$options = array(CURLOPT_HTTPHEADER => array("X-AUTH:".XboxApi::KEY) , CURLOPT_RETURNTRANSFER => true);
+					curl_setopt_array($url, $options);
+					$response = json_decode(curl_exec($url),true);
+					
+					if(isset($response["error_message"])){
+						if($response["error_message"] == "XUID not found"){
+							
+							return false;
+						}
+						
+					}
+				}
 			}
 		 }
 		 public function getGamerUserId($gamer_tag){
@@ -106,23 +119,9 @@ require_once("class.fantasygamingdatabase.php");
 							if($response = curl_exec($url)){
 					
 							if(is_object(json_decode($response,true))){
-						
-								if(isset($response["error_message"])){
-								if($response["error_message"] == "XUID not found"){
+										
 									curl_close($url);
-									$ex->goToPreviousPage();
-									exit;
-								}else{
-									curl_close($url);
-									$ex->goToPreviousPage();
-									exit;
-								}
-							}else{
-								curl_close($url);
-					 			$ex->goToPreviousPage();
-								exit;
-							}
-						
+	
 							}else{
 						
 								curl_close($url);
@@ -131,12 +130,11 @@ require_once("class.fantasygamingdatabase.php");
 							}
 					
 							}else{
-								$ex->goToPreviousPage();
-								exit;
+								curl_close($url);
+								
 							}
 						}
-	    $ex->goToPreviousPage();
-		exit;
+
 					
 				}
 		 }
@@ -155,10 +153,11 @@ require_once("class.fantasygamingdatabase.php");
 							curl_close($url);
 							throw new XboxApiException($response["error_message"],1);
 						}else if(empty($response)){
-							throw new XboxApiException("What the hell just happen?",1);
+							curl_close($url);
+							throw new XboxApiException("What the hell just happen?");
 						}else{
 							curl_close($url);
-					 		throw new XboxApiException("What the hell just happen?",1);
+					 		throw new XboxApiException("What the hell just happen?");
 						}
 						
 					}else{
@@ -167,33 +166,20 @@ require_once("class.fantasygamingdatabase.php");
 					}
 					
 				}else{
-					
+					curl_close($url);
 					throw new XboxApiException("Could not make request to get gamer tag",1);
 				}
 			}catch(Exception $ex){
 				
-				if($ex->getCode() == 1){
+				if($ex->getCode()){
 					$url = curl_init(XboxApi::URL_ROOT . "/v2/gamertag/{$uid}");
-			curl_setopt($url,CURLOPT_RETURNTRANSFER , true);
-			curl_setopt($url,CURLOPT_HTTPHEADER , array("X-AUTH:" . XboxApi::KEY));
+					curl_setopt($url,CURLOPT_RETURNTRANSFER , true);
+					curl_setopt($url,CURLOPT_HTTPHEADER , array("X-AUTH:" . XboxApi::KEY));
 					if($response = curl_exec($url)){
 					
 					if(is_object(json_decode($response,true))){
 						
-						if(isset($response["error_message"])){
 							curl_close($url);
-							$ex->goToPreviousPage();
-							exit;
-						}else if(empty($response)){
-							curl_close($url);
-							$ex->goToPreviousPage();
-							exit;
-						}else{
-							curl_close($url);
-					 		$ex->goToPreviousPage();
-							exit;
-						}
-						
 					}else{
 						$this->user->api_data["xbox"]["gamertag"] = $response;
 						return $this->user->api_data["xbox"]["gamertag"];
@@ -201,12 +187,10 @@ require_once("class.fantasygamingdatabase.php");
 					
 				}else{
 					
-					$ex->goToPreviousPage();
-					exit;
+					curl_close($url);
 				}
 				}
-				$ex->goToPreviousPage();
-				exit;
+				
 			}
 		 }
 		 public function getGamerActivity($uid){
@@ -242,7 +226,7 @@ require_once("class.fantasygamingdatabase.php");
 							}
 							if(empty($activities)){
 								curl_close($url);
-								throw new XboxApiException("I dont know what the fuck happen like...",1);
+								throw new XboxApiException("I dont know what the fuck happen like...");
 							}else{
 								curl_close($url);
 								return $activities;
@@ -253,18 +237,17 @@ require_once("class.fantasygamingdatabase.php");
 					throw new XboxApiException("Could not make request to get gamer xbox activity",1);
 				}
 				}catch(Exception $ex){
-					if($ex->getCode() == 1){
+					if($ex->getCode()){
 						$url = curl_init(XboxApi::URL_ROOT . "/v2/{$uid}/activity/recent");
-			curl_setopt($url,CURLOPT_RETURNTRANSFER , true);
-			curl_setopt($url,CURLOPT_HTTPHEADER , array("X-AUTH:" . XboxApi::KEY));
+						curl_setopt($url,CURLOPT_RETURNTRANSFER , true);
+						curl_setopt($url,CURLOPT_HTTPHEADER , array("X-AUTH:" . XboxApi::KEY));
 			
 				if($response = curl_exec($url)){
 					$activities = null;
 					$response = json_decode($response,true);	
 						if(isset($response["error_message"])){
 								curl_close($url);
-								$ex->goToPreviousPage();
-								exit;
+							
 						}else{
 					 		$activities =  array();
 							$i=0;
@@ -278,8 +261,7 @@ require_once("class.fantasygamingdatabase.php");
 							}
 							if(empty($activities)){
 								curl_close($url);
-								$ex->goToPreviousPage();
-								exit;
+								
 							}else{
 								curl_close($url);
 								return $activities;
@@ -287,13 +269,13 @@ require_once("class.fantasygamingdatabase.php");
 						}
 					
 				}else{
-					$ex->goToPreviousPage();
-					exit;
+					curl_close($url);
+				
 				}
 					}
 				}
-					$ex->goToPreviousPage();
-					exit;
+				
+				
 		 }
 		 public function getGamerCard($uid){
 		 	try{
@@ -321,7 +303,7 @@ require_once("class.fantasygamingdatabase.php");
 								
 								if(empty($gamecard)){
 									curl_close($url);
-									throw new XboxApiException("WTF!",1);
+									throw new XboxApiException("WTF!");
 								}
 								else{
 									curl_close($url);
@@ -333,7 +315,7 @@ require_once("class.fantasygamingdatabase.php");
 					throw new XboxApiException("Could not make request to get xbox gamercard",1);
 				}
 			}catch(Exception $ex){
-				if($ex->getCode() == 1){
+				if($ex->getCode()){
 					$url = curl_init(XboxApi::URL_ROOT . "/v2/{$uid}/gamercard");
 			curl_setopt($url,CURLOPT_RETURNTRANSFER , true);
 			curl_setopt($url,CURLOPT_HTTPHEADER , array("X-AUTH:" . XboxApi::KEY));
@@ -342,8 +324,7 @@ require_once("class.fantasygamingdatabase.php");
 						$response = json_decode($response,true);
 						if(isset($response["description"])){
 								curl_close($url);
-								$ex->goToPreviousPage();
-								exit;
+								
 							}else{
 								$gamecard = array();
 								foreach ($response as $key => $value) {
@@ -355,8 +336,7 @@ require_once("class.fantasygamingdatabase.php");
 								}
 								if(empty($gamecard)){
 									curl_close($url);
-									$ex->goToPreviousPage();
-									exit;
+									
 								}
 								else{
 									curl_close($url);
@@ -365,12 +345,10 @@ require_once("class.fantasygamingdatabase.php");
 							}
 					
 				}else{
-					$ex->goToPreviousPage();
-					exit;
+					curl_close($url);
 				}
 				}
-				$ex->goToPreviousPage();
-					exit;
+			
 			}
 			
 		 }
@@ -401,10 +379,37 @@ require_once("class.fantasygamingdatabase.php");
 							}
 					
 				}else{
-					print_r(curl_getinfo($url));
+					curl_close($url);
 				}
 			}catch(Exception $ex){
-				print_r($ex);
+				
+				$url = curl_init(XboxApi::URL_ROOT . "/v2/{$uid}/profile");
+			curl_setopt($url,CURLOPT_RETURNTRANSFER , true);
+			curl_setopt($url,CURLOPT_HTTPHEADER , array("X-AUTH:" . XboxApi::KEY));
+			
+				if($response = curl_exec($url)){
+						$response = json_decode($response,true);
+						if(isset($response["description"])){
+								curl_close($url);
+								
+							}else{
+								$profile = array();
+								foreach ($response as $key => $value) 
+									$profile[$key] = $value;
+								
+								if(empty($profile)){
+									curl_close($url);
+								
+								}
+								else{
+									curl_close($url);
+									return $profile;
+								}
+							}
+					
+				}else{
+					curl_close($url);
+				}
 			}
 		 }
 		  public function getGamerScore($uid){
@@ -442,7 +447,7 @@ require_once("class.fantasygamingdatabase.php");
 							}
 					
 				}else{
-					print_r(curl_getinfo($url));
+					curl_close($url);
 				}
 		 }catch(Exception $ex){
 		 	
@@ -485,10 +490,45 @@ require_once("class.fantasygamingdatabase.php");
 							}
 					
 				}else{
-					print_r(curl_getinfo($url));
+					curl_close($url);
 				}
 				}catch(Exception $ex){
-					print_r($ex);
+					$url = curl_init(XboxApi::URL_ROOT . "/v2/{$uid}/xbox360games");
+					curl_setopt($url,CURLOPT_RETURNTRANSFER , true);
+					curl_setopt($url,CURLOPT_HTTPHEADER , array("X-AUTH:" . XboxApi::KEY));
+			
+				if($response = curl_exec($url)){
+						$response = json_decode($response,true);
+						if(isset($response["description"]))
+							curl_close($url);
+						else if(empty($response))
+							curl_close($url);
+						else{
+								$games = array();
+								foreach ($response["titles"] as $key => $value){
+									if(is_array($value)){
+										foreach ($value as $k => $v) {
+											if($k == "name")
+												array_push($games , iconv("UTF-8", "ASCII//IGNORE", $v));
+											else
+												continue;
+										}
+									}else	 
+										continue;
+								}
+								if(empty($games)){
+									curl_close($url);
+									throw new XboxApiException("WTF!");
+								}
+								else{
+									curl_close($url);
+									return $games;
+								}
+							}
+					
+				}else{
+					curl_close($url);
+				}
 				}
 		 }
 		 public function getGamerXboxOneGames($uid){
@@ -535,10 +575,52 @@ require_once("class.fantasygamingdatabase.php");
 							}
 					
 				}else{
-					print_r(curl_getinfo($url));
+					curl_close($url);
 				}
 				}catch(Exception $ex){
-					print_r($ex);
+					$url = curl_init(XboxApi::URL_ROOT . "/v2/{$uid}/xboxonegames");
+				curl_setopt($url,CURLOPT_RETURNTRANSFER , true);
+				curl_setopt($url,CURLOPT_HTTPHEADER , array("X-AUTH:" . XboxApi::KEY));
+				if($response = curl_exec($url)){
+					
+						$response = json_decode($response,true);
+						if(isset($response["error_message"]) )
+							curl_close($url);
+						else if(empty($response))
+							curl_close($url);
+						else{
+								$games = array();
+								foreach ($response["titles"] as $key => $value){
+									if(is_array($value)){
+										foreach ($value as $k => $v) {
+											if($value["titleType"]  == "DGame"){
+											if($k == "name")
+												array_push($games , iconv("UTF-8", "ASCII//IGNORE", $v));
+											else
+												continue;
+											}else{
+												continue;
+											}
+										}
+									}else	 
+										continue;
+								}
+								
+								if(empty($games)){
+									curl_close($url);
+									
+								}
+								else{
+									curl_close($url);
+								//	print_r($games);
+									
+									return $games;
+								}
+							}
+					
+				}else{
+					curl_close($url);
+				}
 				}
 		 }
 		 public function getAchievementsForGame($uid,$gameid){
@@ -574,17 +656,51 @@ require_once("class.fantasygamingdatabase.php");
 							}
 					
 				}else{
-					print_r(curl_getinfo($url));
+					curl_close($url);
 				}
 				}catch(Exception $ex){
+					$url = curl_init(XboxApi::URL_ROOT . "/v2/{$uid}/achievements/{$gameid}");
+			curl_setopt($url,CURLOPT_RETURNTRANSFER , true);
+			curl_setopt($url,CURLOPT_HTTPHEADER , array("X-AUTH:" . XboxApi::KEY));
+			
+				if($response = curl_exec($url)){
+						$response = json_decode($response,true);
+						if(isset($response["error_message"]))
+							curl_close($url);
+						else if(empty($response)){
+							curl_close($url);
+							throw new XboxApiException("WTF!");
+						}else{
+								$achievements = array();
+								foreach ($response as $key => $value){
+									
+									if($value["progressState"] != "Achieved")
+										continue;
+									$name = $value["name"];
+									$description = $value["description"];
+									array_push($achievements,array("name"=>$name,"description"=>$description));
+									
+									
+								}
+							
+									curl_close($url);
+									return $achievements;
+								
+							}
 					
+				}else{
+					curl_close($url);
+				}
 				}
 		 }
-		 public function getGameId($game,$uid){
+		 public function getGameId($game,$console,$uid){
 		 	
 			$game_id = null;
 			try{
-				$url = curl_init(XboxApi::URL_ROOT . "/v2/{$uid}/xboxonegames");
+				if($console == "xboxone")
+					$url = curl_init(XboxApi::URL_ROOT . "/v2/{$uid}/xboxonegames");
+				else
+					$url = curl_init(XboxApi::URL_ROOT . "/v2/{$uid}/xbox360games");
 			curl_setopt($url,CURLOPT_RETURNTRANSFER , true);
 			curl_setopt($url,CURLOPT_HTTPHEADER , array("X-AUTH:" . XboxApi::KEY));
 			if($response = curl_exec($url)){
@@ -597,6 +713,8 @@ require_once("class.fantasygamingdatabase.php");
 								
 								foreach ($response["titles"] as $key => $value){
 									if(is_array($value)){
+										if($value["titleType"] == 5 || $value["titleType"] == "LiveApp" )
+											continue;
 										foreach ($value as $k => $v) {
 											if($k == "name"){
 												if(iconv("UTF-8", "ASCII//IGNORE",$value[$k]) == $game){
@@ -621,10 +739,49 @@ require_once("class.fantasygamingdatabase.php");
 								}
 							}
 			}else{
-				
+				curl_close($url);
 			}
 			}catch(Exception $ex){
-				
+				$game_id = null;
+				$url = curl_init(XboxApi::URL_ROOT . "/v2/{$uid}/xboxonegames");
+			curl_setopt($url,CURLOPT_RETURNTRANSFER , true);
+			curl_setopt($url,CURLOPT_HTTPHEADER , array("X-AUTH:" . XboxApi::KEY));
+			if($response = curl_exec($url)){
+					$response = json_decode($response,true);
+						if(isset($response["error_message"]) )
+							curl_close($url);
+						else if(empty($response))
+							curl_close($url);
+						else{
+								
+								foreach ($response["titles"] as $key => $value){
+									if(is_array($value)){
+										foreach ($value as $k => $v) {
+											if($k == "name"){
+												if(iconv("UTF-8", "ASCII//IGNORE",$value[$k]) == $game){
+													$game_id = $value["TitleId"];
+												
+												}
+											}else
+												continue;
+										}
+									}else	 
+										continue;
+								}
+								
+								if(!isset($game_id) || empty($game_id)){
+									curl_close($url);
+									
+								}
+								else{
+								
+									curl_close($url);
+									return dechex($game_id);
+								}
+							}
+			}else{
+				curl_close($url);
+			}
 			}
 			
 			
@@ -672,7 +829,45 @@ require_once("class.fantasygamingdatabase.php");
 					print_r(curl_getinfo($url));
 				}
 			}catch(Exception $ex){
-				
+				$url = curl_init(XboxApi::URL_ROOT . "/v2/game-details-hex/{$hex_game_id}");
+				curl_setopt($url,CURLOPT_RETURNTRANSFER , true);
+				curl_setopt($url,CURLOPT_HTTPHEADER , array("X-AUTH:" . XboxApi::KEY));
+				if($response = curl_exec($url)){
+					$response = json_decode($response,true);
+					if(isset($response["error_message"]))
+							curl_close($url);
+						else if(empty($response)){
+							curl_close($url);
+							
+						}else{
+							
+							if(!isset($response["Items"])){
+								curl_close($url);
+								exit;
+							}
+							
+							$game_details = array("genres" =>array());
+							
+							$game_details["name"] = $response["Items"]["0"]["Name"];
+							$game_details["reduceddescription"] = $response["Items"]["0"]["ReducedDescription"];
+							$game_details["publishername"] = $response["Items"]["0"]["PublisherName"];
+							$game_details["developername"] = $response["Items"]["0"]["DeveloperName"];
+							$game_details["releasedate"] = $response["Items"]["0"]["ReleaseDate"];
+						
+							foreach ($response["Items"]["0"]["Genres"] as $key => $value){
+							
+									array_push($game_details["genres"],$value["Name"] );	
+							
+							
+							}
+								//print_r($game_details);
+								//echo("<br>");
+								//echo("<br>");
+							return $game_details;
+						}
+				}else{
+					curl_close($url);
+				}
 			}
 		 }	
 		 public function getGamerStatsForGame($uid,$game_id){
@@ -711,10 +906,45 @@ require_once("class.fantasygamingdatabase.php");
 								return $stats;
 							}
 				}else{
-					print_r(curl_getinfo($url));
+					curl_close($url);
 				}
 				}catch(Exception $ex){
 					
+					$url = curl_init(XboxApi::URL_ROOT . "/v2/{$uid}/game-stats/{$game_id}");
+			curl_setopt($url,CURLOPT_RETURNTRANSFER , true);
+			curl_setopt($url,CURLOPT_HTTPHEADER , array("X-AUTH:" . XboxApi::KEY));
+			
+				if($response = curl_exec($url)){
+					$response = json_decode($response,true);
+					if(isset($response["error_message"]))
+							curl_close($url);
+						else if(empty($response)){
+							curl_close($url);
+							
+						}else{
+							
+							$stats = array();
+								foreach ($response["groups"] as $key => $value){
+									foreach($response["groups"][$key]["statlistscollection"] as $k=> $v){
+										foreach ($v["stats"] as $stat => $s) {
+											$stats[$s["name"]] = $s["value"];
+											continue;	
+										}
+									}
+									
+									
+								}
+								foreach($response["statlistscollection"] as $key => $value){
+									foreach($value["stats"] as $stat => $s){
+										$stats[$s["name"]] = $s["value"];
+											continue;
+									}
+								}
+								return $stats;
+							}
+				}else{
+					curl_close($url);
+				}
 				}
 		 }
 /////////end of class ///////////////////end of class////////////////////////////end of class//

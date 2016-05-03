@@ -16,6 +16,7 @@ class AddGamerException extends Exception{///Start of class ////////////////////
 
 class AddGamer{///Start of class ///////////////////////
 	
+	public  $mail                = null;
 	public  $database_connection = null;
 	public  $gamer               = null;
 	private $name            	 = null;
@@ -100,10 +101,11 @@ class AddGamer{///Start of class ///////////////////////
 			foreach($users_games["ps"]["ps3"] as $key){
 					
 					$game_id = $key["npcommid"];
-					$details = serialize($psn_api->getGameDetails($game_id));
-					$old_game = $this->database_connection->selectQuery("select * from games where name = '{$key['title']}'");
-					if(empty($old_game) || $old_game->num_rows == 0)
-						$this->database_connection->insertQuery("insert into games (name,console,has_stats,psn_title_id,details) values('{$this->database_connection->connection->real_escape_string($key['title'])}','{$key['platform']}',0,'{$game_id}' , '{$this->database_connection->connection->real_escape_string($details)}')");
+					echo($game_id);
+					//$details = serialize($psn_api->getGameDetails($game_id));
+					//$old_game = $this->database_connection->selectQuery("select * from games where name = '{$key['title']}'");
+					//(empty($old_game) || $old_game->num_rows == 0)
+						//$this->database_connection->insertQuery("insert into games (name,console,has_stats,psn_title_id,details) values('{$this->database_connection->connection->real_escape_string($key['title'])}','{$key['platform']}',0,'{$game_id}' , '{$this->database_connection->connection->real_escape_string($details)}')");
 			}
 			foreach($users_games["ps"]["ps4"] as $key){
 					
@@ -138,7 +140,7 @@ class AddGamer{///Start of class ///////////////////////
 			
 			foreach($users_games["xbox"]["xboxone"] as $key){
 					
-					$game_id = dechex($xbox_api->getGameId($key,$xuid));
+					$game_id = $xbox_api->getGameId($key,$xuid);
 					$details = serialize($xbox_api->getGameDetails($game_id));
 					$old_game = $this->database_connection->selectQuery("select * from games where name = '{$key}'");
 					if(empty($old_game) || $old_game->num_rows == 0)
@@ -154,13 +156,15 @@ class AddGamer{///Start of class ///////////////////////
 			$users_games["ps"]["ps4"]=$psn_api->getGamersPs4Games(urlencode($this->psn_tag));
 			$params = array("name" =>$this->name , "password"=>$this->password,"psn_id"=>$this->psn_tag,"games" => serialize($users_games),"email"=>$this->email,"age"=>$this->birthday,"signed_in"=>1,"profile" => serialize($profile));
 			$this->database_connection->insertQuery("insert into gamers ( username , password   , xbox_id , xbox_uid , psn_id ,games,email , birthday,signed_in,profile)values( ?,?,? , ? , ? , ? , ?,?)",$params);
+				
 				foreach($users_games["ps"]["ps3"] as $key){
 					
 					$game_id = $key["npcommid"];
-					$details = serialize($psn_api->getGameDetails($game_id));
-					$old_game = $this->database_connection->selectQuery("select * from games where name = '{$key['title']}'");
-					if(empty($old_game) || $old_game->num_rows == 0)
-						$this->database_connection->insertQuery("insert into games (name,console,has_stats,psn_title_id,details) values('{$this->database_connection->connection->real_escape_string($key['title'])}','{$key['platform']}',0,'{$game_id}' , '{$this->database_connection->connection->real_escape_string($details)}')");
+					echo "game id =  " . $key;
+					//$details = serialize($psn_api->getGameDetails($game_id));
+					//$old_game = $this->database_connection->selectQuery("select * from games where name = '{$key['title']}'");
+					//if(empty($old_game) || $old_game->num_rows == 0)
+						//$this->database_connection->insertQuery("insert into games (name,console,has_stats,psn_title_id,details) values('{$this->database_connection->connection->real_escape_string($key['title'])}','{$key['platform']}',0,'{$game_id}' , '{$this->database_connection->connection->real_escape_string($details)}')");
 				}	
 				foreach($users_games["ps"]["ps4"] as $key){
 					
@@ -221,13 +225,13 @@ class AddGamer{///Start of class ///////////////////////
 		$this->validateUsername();
 	}
 	public function validateEmail(){
-			$mail == null;	
+			$message = null;
 			if(empty($this->email) || $this->email == "" )//need to check if email format is right and check for duplicate emails
 				throw new AddGamerException("A valid email was not entered. Please Enter a valid email address.");
-			$mail = new EMail("bennydorlisme@gaming-for-glory.com", $this->email);
-			
-			$mail->sendEmail("Test","This is a test");
-			
+			$message = "<div>This is a div.</div>";
+			$this->mail = new EMail("bennydorlisme@gaming-for-glory.com", $this->email);
+			$this->mail->sendEmail("Confirmation",$message);
+			echo "<div class='module_container' id='email_confirmation_module_container'><div class='module' id='email_confirmation_module'><span>An email has been sent to {$this->email}. Please confirm this email address.</div></div>";
 	}
 	
 	public function validatePassword(){
@@ -262,7 +266,7 @@ class AddGamer{///Start of class ///////////////////////
 	public function validateXboxLiveUsername(){
 		
 		$valid_name = $this->database_connection->selectQuery("select * from gamers where xbox_id ='{$this->xbox_tag}'");
-		
+		print_r($valid_name);
 			if($this->xbox_tag == "" || str_len($this->xbox_tag) < 2 || !isset($this->xbox_tag) || $valid_name)
 				 throw new AddGamerException("An invalid Xbox Live username was entered. Please enter a valid Xbox Live username.");
 		if(!XboxApi::isGamerTagValid($this->xbox_tag))
